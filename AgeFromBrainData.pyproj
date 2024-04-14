@@ -4,7 +4,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>5297961f-d87f-4e2e-9d6a-49540ac74591</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>AgeFromBrainData.py</StartupFile>
+    <StartupFile>
+    </StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,11 +22,14 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AgeFromBrainData.py" />
     <Compile Include="ExcelData.py" />
-    <Compile Include="Model.py">
+    <Compile Include="RegressionModel.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ConsoleApp.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TestCovariance.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

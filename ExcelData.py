@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import numpy
 
@@ -28,43 +29,54 @@ class ExcelData(IData):
         self._data_frame = None # full data from the .xlsx
         self._numpy_data = None # numpy array of the data
         self._selected_column = None
-        self.load_data()
+        self._removed_columns = 'FILE_ID', 'AGE_AT_SCAN'
+        self._load_data()
 
-    def load_data(self):
+    def _load_data(self):
+
+        if not os.path.exists(self._file_path):
+            raise ValueError("File {} doesn't exist!".format(self._file_path))
+
         """Load data from the Excel file."""
         try:
-            _data_frame = pd.read_excel(self._file_path)
+            self._data_frame = pd.read_excel(self._file_path)
         except Exception as e:
             print(f"Error loading data from {self._file_path}: {e}")
-        self._numpy_data = numpy.array(_data_frame.drop(columns=['FILE_ID', 'AGE_AT_SCAN']), float)
-        self._selected_column = numpy.array(_data_frame['AGE_AT_SCAN'], float)
+        self._numpy_data = numpy.array(self._data_frame.drop(columns=['FILE_ID', 'AGE_AT_SCAN']), float)
+        self._selected_column = numpy.array(self._data_frame['AGE_AT_SCAN'], float)
 
     @property
     def data_grid(self):
         """Get the data grid."""
         return self._numpy_data
 
-    @property
-    def selected_column(self):
-        """Get the selected column."""
-        return self._selected_column
-
-    @selected_column.setter
-    def selected_column(self, column_name):
+    def remove_column(self, column_name):
         """
-        Get the selected column from the data frame.
+        Remove a selected column from the data frame.
 
         Parameters:
         column_name (str): Name of the column to select.
+        """
+        if column_name in self._data_frame.columns:
+            self._numpy_data = numpy.array(self._data_frame.drop(columns=[self._removed_columns, column_name]), float)
+        else:
+            raise ValueError(f"Column '{column_name}' not found in the data frame.")
+    
+    def select_column(self, column_name):
+        """
+        Get a selected column from the data frame.
 
+        Parameters:
+        column_name (str): Name of the column to select.
+        
         Returns:
         numpy.ndarray: Selected column as a numpy array.
         """
         if column_name in self._data_frame.columns:
-            return numpy.array(self._data_frame[column_name], float)
+            self._selected_column = numpy.array(self._data_frame[column_name], float)
+            return self._selected_column
         else:
             raise ValueError(f"Column '{column_name}' not found in the data frame.")
-
 
 class AnotherData(IData):
     """Class for handling another type of data."""

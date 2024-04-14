@@ -4,13 +4,14 @@ import matplotlib.pyplot as plt
 from keras.models import Model
 from keras.layers import Dense, Input
 
-#input data from .xlsx
-file1 = 'FS_features_ABIDE_males.xlsx'
-df = pandas.read_excel(file1)
+from Data import IData,ExcelData
 
-my_matrix = numpy.array(df.drop(columns=['FILE_ID']), float)
-age = my_matrix[:,0]
-my_matrix = numpy.delete(my_matrix, 0, axis=1)
+#input data from .xlsx files
+
+samples = ExcelData('input\FS_features_ABIDE_males.xlsx')
+
+my_matrix = samples.data_grid
+age = samples.selected_column('AGE_AT_SCAN')
 
 input_layer = Input( shape= (len(my_matrix[0]), ) )
 hidden_1 = Dense(5,activation='relu')(input_layer)

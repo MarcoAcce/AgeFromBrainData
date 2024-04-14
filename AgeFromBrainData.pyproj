@@ -22,7 +22,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AgeFromBrainData.py" />
-    <Compile Include="module1.py">
+    <Compile Include="ExcelData.py" />
+    <Compile Include="Model.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

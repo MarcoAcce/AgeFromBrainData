@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\dev\\AgeFromBrainData\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{5297961F-D87F-4E2E-9D6A-49540AC74591}|AgeFromBrainData.pyproj|C:\\dev\\AgeFromBrainData\\module1.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{5297961F-D87F-4E2E-9D6A-49540AC74591}|AgeFromBrainData.pyproj|solutionrelative:module1.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5297961F-D87F-4E2E-9D6A-49540AC74591}|AgeFromBrainData.pyproj|C:\\dev\\AgeFromBrainData\\AgeFromBrainData.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{5297961F-D87F-4E2E-9D6A-49540AC74591}|AgeFromBrainData.pyproj|solutionrelative:AgeFromBrainData.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "module1.py",
+              "DocumentMoniker": "C:\\dev\\AgeFromBrainData\\module1.py",
+              "RelativeDocumentMoniker": "module1.py",
+              "ToolTip": "C:\\dev\\AgeFromBrainData\\module1.py",
+              "RelativeToolTip": "module1.py",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAABAAAA",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAegSURBVGhD7VlrbFRFFD7b3W23S1laWkhbsAVaaAsRCrRBE0pNEBMEE6tAiIZHSDDBRNEfEEKMAfmhGI0xMUFDTFQU/hRURHkZpaGENihQbSgvkUdLW0qh7\u002Bc\u002B/M7cmd27y3a5e7uAJn7J6Tx27r3fN3POmbm39J\u002BGz\u002BeTtf/xyGCRZUSsXbv2QS7Vr7DFO3fu7NGa0cGwgMTExCs5OTkdsmvYqK2tLXQ4HB19fX0uNI/CWMSA\u002BDEKGBaQn59fvW7dujmya9hYv349lZaWksfjqamsrJyBrh9gS6IVESfLR4alS5fOmDlz5hlUn4OVY7LixQ8G8cgFMFavXg0N5kT8KwQwzIqwyjIiZs\u002BevSUtLa2huLh4PLfr6\u002Buprq6OGhoaDBn8nJKTk8W9FA4dOkQTJkyggoIC2UNUWFiY0dzcfKapqakUzWl47t7Tp09HzICmViApKYnS09MNm8vFicYY5EqcRfUF2FdYiYiTbEoAz2Z2drZhS0lJkVcaw6pVqwrz8vLYnV6CvS46h8AjTaMGsRWpdYus3wNTAjo6OoQZBbtcaAzs27dP1sLD7XbTiRMnuBp7ARzEHJxGwXHArhQNent7adOmTVyNvQCv1xvVSdZisVBcXHThZlSAqSBmMlar1bAp8lzabDZhdrv9HuN\u002BHh8NTAmIFkwKBzdKSEigzgEfnW/qoooLLXSwppH2n66no382UvXl23T1dg9ZrDb/WCN44DEwevRomj59OlVebKE9J6/R1ZYO8sEFhRvK0uv1\u002BOtJCTZaPncyvTwvn/buLacjR47E3oWi2chyc3Op5kYbbT9wjhrudFPu2JFB5LnUW0d3H316sIZ2HDxLZWVllJWVFXEXNCUgmo3M6XTSqSutgtyGRQX08cpiWv7ExGARSAhaiTaM\u002B3dXnKPeQS\u002BVlJTkyceGxUOJgc7eAUEs3qqCWXsfZ8LCpAhRSiFut4dutnbyZI0SFw0BUwJ4E\u002BM4MGIMRW7bt2fpzS\u002BraFfFRdEOdSWvVxun2gxkJpuoDAHTAvSnzUjG8Eliff2DVHu91U8wyORKeOXK8IrhSnF9JMR0I\u002BM8Hx8fL9Jmv9tLHhBntPcMUO\u002BAW9S1y\u002BS1aLy37xSdvxEQFSg99M3G5ylvnFMby7A4cH6x8PnibWyOv4ku/nM/hAoIByZtw2a0/8xN\u002Bv73G3SrvSeEUICYqqt\u002BfRrVl7s3lVGe/V35BMCSiBS4gMg5rw\u002BtBRBRGZMgVjO/45fL9Pmxy9TS3gsCMrPoCGllIFhVv7\u002BPXUeVwoVC4O3Gcu7FOeOMA60v4AU2UwI4OKurq/3W3d1Nl5q76FDNzfDEVJ8kFr4MiOASFfk0CZ8HBjf0DSKtHeaeHNgCUwL0G1lmZqZ4YTl\u002B4dbQxGRdiQk1JVhlIRVfzngZyF4Q94K4MNT7LxJ52njIIlMCQjcyPm1eaGwPIqURCiY2VDvIJPnxY1w03tWskeZZZwsScYmHFQ07BtRJ81pLV2RiykJWJnTFGCMcdtq2Yi5ZOg8Ek1YuxO3\u002Bazx0hqkspH8j48NaamoqPfv\u002Bz4K4Rj6QafTlJJyDpmWNFjsyCwBjQVrEipz5jNQkWjgrjVI95UR95zAGvo/7aeS5lHXXM0Rprwz/NMqfRtgWbj\u002BK5\u002BiJB\u002BoJVgttXlJET02\u002BQzTASw8S4cDk3K2ae3gHAmQVcbEKsu6aTzT2NXM7MQduUVGRsIyMDNHncliDZlufgQT5rGNIgV8jBVbDsAcF2Smi7irYScx6HYj2g6TOdZQb6V3IMkI815QA9nveuNg4gBlZqSM0d5Cm\u002BbSPcjNGYebvgtgfYtw9wDiNnDRFVsy26tOJULGQMJGvvjvsIObZZuRnJutmP2AF41Kk24QBE/ET05HzC5G/CyFcV\u002BNROgv5DhWmBOg3sqqqKurq6qLSqekgH5yFuLSLvRIP1EPNelhykmC42Vd9zlk4poqPZftNCQh9I\u002BOdODd9FJUUpAu30bsS/sirJEQQSkKCnCQoyIWICNuP68es5Du1w8pNCQjdyPjbJ8/25heLqGzOJAS0PbAKfgEo/bOJMpyrsEXqt48lGvcWVuBxvuEWxF9nzE6jHMx8oFMbWxDa9xD1IMOI2WdSMhWypSwnckxFnQfyH53g\u002BPG4cdivEx/CNuCZvpgJUGABbCo7iReqNqTPbhzjFel7hPCsy7p\u002B05r4GcRN3orb8HdJ/tdTI\u002Bwg7n0epYApF4oEdh3\u002Brjk4OChMwE\u002BYTecewr9lnftscJHEabIPJgHCb8A2wj7Sk2fEXEBYiJmVZIUQSVARF/1YsexPsKF8AB8v4otg93cQwy7kdDrrpkyZckt2GcaaNWuedAxUxNOdXRp55SpCiK7OwZ6DMRyof7\u002BK48RfRHk4zMUlbsWsD//jrqxGjWXLltHT80vgve/gyHBBktUTR6n8Pg4BG5eknYcyN5J31GKOp\u002BELGA6wL4ARHYebFFLbdwjonxCOiMUgEdpuLugkFeOUuQJn6pnc8SPILxY/DYEHLoABESNRcOpbg5aV\u002Bq9jNXBUHryNJvzfCo0J2QhgpFMrDyU\u002B7HPgQnFkPBQBChDyGIplMPgUzYbB4Yn/ncrvh1dgOJISlogOgzyW5n4g\u002Bge77IouL5SiYQAAAABJRU5ErkJggg==",
+              "WhenOpened": "2024-04-14T10:13:23.086Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AgeFromBrainData.py",
+              "DocumentMoniker": "C:\\dev\\AgeFromBrainData\\AgeFromBrainData.py",
+              "RelativeDocumentMoniker": "AgeFromBrainData.py",
+              "ToolTip": "C:\\dev\\AgeFromBrainData\\AgeFromBrainData.py",
+              "RelativeToolTip": "AgeFromBrainData.py",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAABLAAAA",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAegSURBVGhD7VlrbFRFFD7b3W23S1laWkhbsAVaaAsRCrRBE0pNEBMEE6tAiIZHSDDBRNEfEEKMAfmhGI0xMUFDTFQU/hRURHkZpaGENihQbSgvkUdLW0qh7\u002Bc\u002B/M7cmd27y3a5e7uAJn7J6Tx27r3fN3POmbm39J\u002BGz\u002BeTtf/xyGCRZUSsXbv2QS7Vr7DFO3fu7NGa0cGwgMTExCs5OTkdsmvYqK2tLXQ4HB19fX0uNI/CWMSA\u002BDEKGBaQn59fvW7dujmya9hYv349lZaWksfjqamsrJyBrh9gS6IVESfLR4alS5fOmDlz5hlUn4OVY7LixQ8G8cgFMFavXg0N5kT8KwQwzIqwyjIiZs\u002BevSUtLa2huLh4PLfr6\u002Buprq6OGhoaDBn8nJKTk8W9FA4dOkQTJkyggoIC2UNUWFiY0dzcfKapqakUzWl47t7Tp09HzICmViApKYnS09MNm8vFicYY5EqcRfUF2FdYiYiTbEoAz2Z2drZhS0lJkVcaw6pVqwrz8vLYnV6CvS46h8AjTaMGsRWpdYus3wNTAjo6OoQZBbtcaAzs27dP1sLD7XbTiRMnuBp7ARzEHJxGwXHArhQNent7adOmTVyNvQCv1xvVSdZisVBcXHThZlSAqSBmMlar1bAp8lzabDZhdrv9HuN\u002BHh8NTAmIFkwKBzdKSEigzgEfnW/qoooLLXSwppH2n66no382UvXl23T1dg9ZrDb/WCN44DEwevRomj59OlVebKE9J6/R1ZYO8sEFhRvK0uv1\u002BOtJCTZaPncyvTwvn/buLacjR47E3oWi2chyc3Op5kYbbT9wjhrudFPu2JFB5LnUW0d3H316sIZ2HDxLZWVllJWVFXEXNCUgmo3M6XTSqSutgtyGRQX08cpiWv7ExGARSAhaiTaM\u002B3dXnKPeQS\u002BVlJTkyceGxUOJgc7eAUEs3qqCWXsfZ8LCpAhRSiFut4dutnbyZI0SFw0BUwJ4E\u002BM4MGIMRW7bt2fpzS\u002BraFfFRdEOdSWvVxun2gxkJpuoDAHTAvSnzUjG8Eliff2DVHu91U8wyORKeOXK8IrhSnF9JMR0I\u002BM8Hx8fL9Jmv9tLHhBntPcMUO\u002BAW9S1y\u002BS1aLy37xSdvxEQFSg99M3G5ylvnFMby7A4cH6x8PnibWyOv4ku/nM/hAoIByZtw2a0/8xN\u002Bv73G3SrvSeEUICYqqt\u002BfRrVl7s3lVGe/V35BMCSiBS4gMg5rw\u002BtBRBRGZMgVjO/45fL9Pmxy9TS3gsCMrPoCGllIFhVv7\u002BPXUeVwoVC4O3Gcu7FOeOMA60v4AU2UwI4OKurq/3W3d1Nl5q76FDNzfDEVJ8kFr4MiOASFfk0CZ8HBjf0DSKtHeaeHNgCUwL0G1lmZqZ4YTl\u002B4dbQxGRdiQk1JVhlIRVfzngZyF4Q94K4MNT7LxJ52njIIlMCQjcyPm1eaGwPIqURCiY2VDvIJPnxY1w03tWskeZZZwsScYmHFQ07BtRJ81pLV2RiykJWJnTFGCMcdtq2Yi5ZOg8Ek1YuxO3\u002Bazx0hqkspH8j48NaamoqPfv\u002Bz4K4Rj6QafTlJJyDpmWNFjsyCwBjQVrEipz5jNQkWjgrjVI95UR95zAGvo/7aeS5lHXXM0Rprwz/NMqfRtgWbj\u002BK5\u002BiJB\u002BoJVgttXlJET02\u002BQzTASw8S4cDk3K2ae3gHAmQVcbEKsu6aTzT2NXM7MQduUVGRsIyMDNHncliDZlufgQT5rGNIgV8jBVbDsAcF2Smi7irYScx6HYj2g6TOdZQb6V3IMkI815QA9nveuNg4gBlZqSM0d5Cm\u002BbSPcjNGYebvgtgfYtw9wDiNnDRFVsy26tOJULGQMJGvvjvsIObZZuRnJutmP2AF41Kk24QBE/ET05HzC5G/CyFcV\u002BNROgv5DhWmBOg3sqqqKurq6qLSqekgH5yFuLSLvRIP1EPNelhykmC42Vd9zlk4poqPZftNCQh9I\u002BOdODd9FJUUpAu30bsS/sirJEQQSkKCnCQoyIWICNuP68es5Du1w8pNCQjdyPjbJ8/25heLqGzOJAS0PbAKfgEo/bOJMpyrsEXqt48lGvcWVuBxvuEWxF9nzE6jHMx8oFMbWxDa9xD1IMOI2WdSMhWypSwnckxFnQfyH53g\u002BPG4cdivEx/CNuCZvpgJUGABbCo7iReqNqTPbhzjFel7hPCsy7p\u002B05r4GcRN3orb8HdJ/tdTI\u002Bwg7n0epYApF4oEdh3\u002Brjk4OChMwE\u002BYTecewr9lnftscJHEabIPJgHCb8A2wj7Sk2fEXEBYiJmVZIUQSVARF/1YsexPsKF8AB8v4otg93cQwy7kdDrrpkyZckt2GcaaNWuedAxUxNOdXRp55SpCiK7OwZ6DMRyof7\u002BK48RfRHk4zMUlbsWsD//jrqxGjWXLltHT80vgve/gyHBBktUTR6n8Pg4BG5eknYcyN5J31GKOp\u002BELGA6wL4ARHYebFFLbdwjonxCOiMUgEdpuLugkFeOUuQJn6pnc8SPILxY/DYEHLoABESNRcOpbg5aV\u002Bq9jNXBUHryNJvzfCo0J2QhgpFMrDyU\u002B7HPgQnFkPBQBChDyGIplMPgUzYbB4Yn/ncrvh1dgOJISlogOgzyW5n4g\u002Bge77IouL5SiYQAAAABJRU5ErkJggg==",
+              "WhenOpened": "2024-04-14T08:48:26.481Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

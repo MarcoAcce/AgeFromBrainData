@@ -3,20 +3,40 @@ import signal
 import matplotlib.pyplot as plt
 from keras.models import Model, load_model
 from keras.layers import Dense, Input
-from keras.callbacks import Callback, ModelCheckpoint, EarlyStopping
-import pickle
+from keras.callbacks import Callback, ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
 import datetime
 from ExcelData import IData,ExcelData
+from datetime import datetime
+
+class IRegression:
+    """Interface for regression classes."""
+    
+    def Compile_Model(self, shape=None, checkpoint_path = None):
+        raise NotImplementedError("Subclasses must implement Compile_Model method")
+
+    def Start_Training(self, X, y, save_checkpoint_path = None
+                       , validation_split = 0.75, epochs = None, verbose_training = 0):
+        raise NotImplementedError("Subclasses must implement Start_Training method")
+
+    def Plot_History(self):
+        raise NotImplementedError("Subclasses must implement Plot_History method")
 
 class PrintProgress(Callback):
     """Callback for printing progress during model training."""
-    def on_epoch_end(self, epoch, logs=None):
-        if epoch % 3 == 0:
+    _number_of_epochs_per_print=3
+    @property
+    def number_of_epochs_per_print(self):
+        return self._number_of_epochs_per_print
+    @number_of_epochs_per_print.setter
+    def number_of_epochs_per_print(self, num):
+        self._number_of_epochs_per_print=num
+    def on_epoch_end(self, epoch, logs=None, ):
+        if epoch % self.number_of_epochs_per_print == 0:
             print(f"Epoch {epoch}/{self.params['epochs']} - training loss: {logs['loss']:.4f} - val_loss: {logs['val_loss']:.4f}")
             import os
             
 
-class RegressionModel:
+class RegressionModel(IRegression):
     """Class for training and plotting history of a regression model using MLP."""
     
     @property
@@ -27,7 +47,8 @@ class RegressionModel:
     def epoch_number(self, num):
         if self.model == None:
             self._epoch_number = num 
-        else: print("Cannot change the parameters of an already defined method") 
+        else: 
+            print("Cannot change the parameters of an already defined method") 
 
     @property
     def stopping_patience(self):
@@ -38,8 +59,9 @@ class RegressionModel:
         if self.model == None:
             self._stopping_patience = num
         else: print("Cannot change the parameters of an already defined method")
+        
 
-    def __init__(self, hidden_layers=1, nodes_per_layer=5, epochs=100, patience=100, from_history_path=None, from_checkpoint_path=None):
+    def __init__(self, hidden_layers=1, nodes_per_layer=5, epochs=100, patience=100):
         """
         Constructor for RegressionModel_mlp class.
 
@@ -48,56 +70,47 @@ class RegressionModel:
         nodes_per_layer (int): Number of nodes in each hidden layer.
         epochs (int): Number of epochs for training.
         patience (int): Patience for early stopping.
-        from_history_path (str): File path to saved history.
-        from_checkpoint_path (str): File path to saved model checkpoint.
         """
         self._hidden_layers = hidden_layers
         self._stopping_patience = patience
         self._nodes_per_layer = nodes_per_layer
         self._model = None  # Placeholder for the Keras model
         self._history = None  # Placeholder for the training history
-        self._epoch_number = epochs
-        # Define callbacks
-        self.checkpoint = ModelCheckpoint("checkpoints/model_checkpoint.keras", monitor='val_loss', verbose=0, save_best_only=True, mode='min')
-        self.early_stopping = EarlyStopping(monitor='val_loss', patience=self._stopping_patience, verbose=2, mode='min', restore_best_weights=True)
-        self.print_progress = PrintProgress()
+        self._epoch_number = epochs        
 
-        if from_history_path is not None and from_checkpoint_path is not None:
-            self._load_model_from_checkpoint(from_checkpoint_path)
-            self._load_history(from_history_path)
-        
-        # Register signal handler for keyboard interrupts
-        #signal.signal(signal.SIGINT, self._handle_interrupt)
-
-    def _load_model_from_checkpoint(self, checkpoint_path):
-        """Load model from a checkpoint file."""
-        if os.path.exists(checkpoint_path):
-            print("Loading model from checkpoint...")
-            self._model = load_model(checkpoint_path)
-        else:
-            print("Checkpoint file not found. Model initialization skipped.")
-
-    def _load_history(self, history_path):
-        """Load training history from a file."""
-        if os.path.exists(history_path):
-            print("Loading training history...")
-            with open(history_path, 'rb') as file:
-                self._history = pickle.load(file)
-        else:
-            print("History file not found. History initialization skipped.")
-
-
-    def Define_Model(self, shape):
+    def Compile_Model(self,shape=None, checkpoint_path = None, number_of_epochs_per_print = 3):
         """Define the architecture of the regression model."""
+        if (shape == None and checkpoint_path == None):
+            print("Required arguments not provided.")
+            return
         input_layer = Input(shape=(shape,))
         hidden_layer = input_layer
         for _ in range(self._hidden_layers):
             hidden_layer = Dense(self._nodes_per_layer, activation='relu')(hidden_layer)
-        output = Dense(1, activation='linear')(hidden_layer)
-        self._model = Model(inputs=input_layer, outputs=output)
-        self._model.compile(loss='mean_squared_error', optimizer='adam')
+        output_layer = Dense(1, activation='linear')(hidden_layer)
+        self._model = Model(inputs=input_layer, outputs=output_layer)
+        if(checkpoint_path != None): 
+            self._model.load_weights(checkpoint_path)
+        # Define callbacks
+        self.checkpoint = ModelCheckpoint("checkpoints/model_checkpoint" 
+                                          + str(datetime.now().strftime("%Y-%m-%d %H-%M-%S"))
+                                          + ".weights.h5"
+                                          , monitor='val_loss', verbose=0, save_best_only=True, mode='min', save_weights_only=True)
+        self.early_stopping = EarlyStopping(monitor='val_loss', patience=self._stopping_patience, verbose=2
+                                            , mode='min', restore_best_weights=True)
+        self.print_progress = PrintProgress()
+        self.reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor = 0.3 , patience=50, mode = 'min'
+                                           , min_lr=0.01, verbose = 1, min_delta=1)
 
-    def Start_Training(self, X, y, save_checkpoint_path = None, validation_split = 0.5, epochs = None, verbose_training = 0):
+        self.print_progress.number_of_epochs_per_print = 100        
+        self.plotPath = os.path.sep.join(["output", "model.png"])
+        self.jsonPath = os.path.sep.join(["output", "model.json"])
+        #Compile model
+        self._model.compile( loss = "mean_squared_error", optimizer='adam') 
+
+
+    def Start_Training(self, X, y, save_checkpoint_path = None
+                       , validation_split = 0.75, epochs = None, verbose_training = 0):
         """
         Train the regression model.
 
@@ -113,34 +126,15 @@ class RegressionModel:
         if self._model is None:
             raise ValueError("Model has not been initialized. Please initialize the model before training.")
         if save_checkpoint_path is not None:
-            self.checkpoint = ModelCheckpoint(save_checkpoint_path, monitor='val_loss', verbose = verbose_training, save_best_only=True, mode='min')
+            self.checkpoint = ModelCheckpoint(save_checkpoint_path,  monitor='val_loss'
+                                              , verbose=0, save_best_only=True, mode='min', save_weights_only=True)
         # Train the model with callbacks
-        history = self._model.fit(X, y, validation_split = validation_split, epochs = epochs,verbose = verbose_training, callbacks=[self.checkpoint, self.early_stopping, self.print_progress])
-        self._handle_interrupt(None,None)
+        history = self._model.fit(X, y, validation_split = validation_split, batch_size = 100
+                                  , epochs = epochs, verbose = verbose_training, shuffle = True
+                                  , callbacks=[self.checkpoint, self.early_stopping, self.print_progress, self.reduce_lr])
         self._history = history 
         return history
     
-    def Resume_Training(self, X, y, from_checkpoint_path = "checkpoints/model_checkpoint.keras", save_checkpoint_path=None, epochs = None, validation_split = 0.5, verbose_training = 0):
-        """
-        Resume training from the last saved checkpoint.
-
-        Parameters:
-        X (numpy.ndarray): Input features.
-        y (numpy.ndarray): Target values.
-        
-        Returns:
-        history: Training history.
-        """
-        if os.path.exists(from_checkpoint_path):
-            print("Resuming training from the last checkpoint...")
-            self._model.load_weights(from_checkpoint_path)
-            history = self.Start_Training(X,y,save_checkpoint_path, epochs, validation_split, verbose_training)
-            return history
-        else:
-            print("Checkpoint file not found. Cannot resume training.")
-            return None
-
-
     def Plot_History(self):
         """
         Plot the training and validation loss history.
@@ -156,34 +150,12 @@ class RegressionModel:
         plt.ylabel('Loss')
         plt.legend()
         plt.show()
-    
-    def _handle_interrupt(self, signum, frame):
-        """
-        Handle keyboard interrupt signal.
 
-        Currently doesn't work
-        
-        Parameters:
-        signum: Signal number
-        frame: Current stack frame
-        """
-        pass
-    """
-        #print("\nTraining stopped. Saving model checkpoint...")
-        if self._model is not None:
-            # Get the current date and time
-            current_datetime = datetime.datetime.now()
-            # Format the date and time as a string
-            formatted_datetime = current_datetime.strftime("%Y-%m-%d-%H-%M-%S")
-            fileName = "checkpoints/interrupted_model_checkpoint-" + formatted_datetime 
-            self._model.save_weights(fileName + ".weights.h5")
-            #rename
-            os.rename(fileName + ".weights.h5", fileName + ".keras")
-        if self._history is not None:
-            history_path = os.path.join(os.getcwd(), "interrupted_model_history.pkl")
-            with open(history_path, "wb") as f:
-                pickle.dump(self._history.history, f)
-        exit(0) 
-        """
+    def Save_Model(self, path = ""):
+        if path == "":
+            path= "saves/" 
+        path += str(datetime.now().strftime("%Y-%m-%d %H-%M-%S"))
+        self._model.save(path + ".keras")
+        self._model.save_weights(path + ".weights.h5")
 
 

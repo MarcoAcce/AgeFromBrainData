@@ -1,4 +1,5 @@
 import os
+from keras.src.random import normal
 import pandas as pd
 import numpy
 
@@ -18,7 +19,7 @@ class IData:
 
 class ExcelData(IData):
     """Class for handling Excel data."""
-    def __init__(self, file_path):
+    def __init__(self, file_path, normalisation = False):
         """
         Constructor for ExcelData class.
 
@@ -31,6 +32,8 @@ class ExcelData(IData):
         self._selected_column = None
         self._removed_columns = 'FILE_ID', 'AGE_AT_SCAN'
         self._load_data()
+        if (normalisation):
+            self.normalize_columns
 
     def _load_data(self):
 
@@ -42,8 +45,9 @@ class ExcelData(IData):
             self._data_frame = pd.read_excel(self._file_path)
         except Exception as e:
             print(f"Error loading data from {self._file_path}: {e}")
-        self._numpy_data = numpy.array(self._data_frame.drop(columns=['FILE_ID', 'AGE_AT_SCAN']), float)
-        self._selected_column = numpy.array(self._data_frame['AGE_AT_SCAN'], float)
+        self._numpy_data = self._data_frame.drop(columns=['FILE_ID', 'AGE_AT_SCAN']).to_numpy(copy = True, na_value=-9999, dtype=float)
+        self._selected_column = self._data_frame['AGE_AT_SCAN'].to_numpy(copy = True, dtype=float)
+
 
     @property
     def data_grid(self):
@@ -58,10 +62,26 @@ class ExcelData(IData):
         column_name (str): Name of the column to select.
         """
         if column_name in self._data_frame.columns:
-            self._numpy_data = numpy.array(self._data_frame.drop(columns=[self._removed_columns, column_name]), float)
+            self._numpy_data = self._data_frame.drop(columns=[self._removed_columns, column_name]).to_numpy(copy = True, dtype=float)
+            self._removed_columns.__add__(column_name)
         else:
             raise ValueError(f"Column '{column_name}' not found in the data frame.")
     
+    def normalize_columns(self):
+        ncolumn = self._numpy_data.shape[1]
+        nrows =self._numpy_data.shape[0]
+        column_min, column_max = 0
+        for y in range (ncolumn):
+            column_max = max(self._numpy_data[:,y])
+            column_min = min(self._numpy_data[:,y])
+            column_normalise = column_max - column_min
+            for x in range(nrows):
+                if self._numpy_data[x,y] == -9999:
+                    continue
+                self._numpy_data[x,y] = self._numpy_data[x,y] / column_normalise
+        
+
+
     def select_column(self, column_name):
         """
         Get a selected column from the data frame.
@@ -73,7 +93,8 @@ class ExcelData(IData):
         numpy.ndarray: Selected column as a numpy array.
         """
         if column_name in self._data_frame.columns:
-            self._selected_column = numpy.array(self._data_frame[column_name], float)
+            #self._selected_column = numpy.array(self._data_frame[column_name], float)
+            self._selected_column = self._data_frame[column_name].to_numpy(copy=True, dtype=float)
             return self._selected_column
         else:
             raise ValueError(f"Column '{column_name}' not found in the data frame.")

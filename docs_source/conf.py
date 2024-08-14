@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.abspath('../src'))
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'AgeFromBrainData'
+project = 'Age From Brain Data'
 copyright = '2024, Marco Accerenzi'
 author = 'Marco Accerenzi'
 release = '0.1'
@@ -40,4 +40,6 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'alabaster'
+
+
 html_static_path = ['_static']

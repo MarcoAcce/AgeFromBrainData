@@ -1,7 +1,6 @@
-Optimizator module
+Optimizator class
 ==================
 
 .. automodule:: Optimizator
    :members:
-   :undoc-members:
    :show-inheritance:

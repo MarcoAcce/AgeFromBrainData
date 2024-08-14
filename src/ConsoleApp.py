@@ -5,6 +5,7 @@ import ExcelData as ed
 import RegressionModel as rm
 
 def ConsoleApp(X, y):
+    """Function providing a command line UI for the model."""
     print("Welcome to the Regression Model Training Console App!")
  
     #default values for the model
@@ -19,7 +20,7 @@ def ConsoleApp(X, y):
 
     # Prompt the user for input
     while True:
-        skip = input("Do you want to use the default values for the moedl? (yes/no): ").strip().lower() #- resume not yet implemented
+        skip = input("Do you want to use the default values for the model? (yes/no): ").strip().lower() #- resume not yet implemented
         if skip == "yes" or skip == "no":
             break
         else:

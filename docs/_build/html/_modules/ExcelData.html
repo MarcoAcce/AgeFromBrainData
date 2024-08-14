@@ -35,32 +35,21 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span>
 
-
-<div class="viewcode-block" id="IData">
-<a class="viewcode-back" href="../ExcelData.html#ExcelData.IData">[docs]</a>
-<span class="k">class</span> <span class="nc">IData</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Interface for data classes.&quot;&quot;&quot;</span>
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">data_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract property representing the data grid.&quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Subclasses must implement data_grid property&quot;</span><span class="p">)</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">selected_column</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract property representing the selected column.&quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Subclasses must implement selected_column property&quot;</span><span class="p">)</span></div>
-
+<span class="kn">from</span> <span class="nn">IData</span> <span class="kn">import</span> <span class="n">IData</span>
 
 
 <div class="viewcode-block" id="ExcelData">
 <a class="viewcode-back" href="../ExcelData.html#ExcelData.ExcelData">[docs]</a>
 <span class="k">class</span> <span class="nc">ExcelData</span><span class="p">(</span><span class="n">IData</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class for handling Excel data.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ExcelData.__init__">
+<a class="viewcode-back" href="../ExcelData.html#ExcelData.ExcelData.__init__">[docs]</a>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">normalisation</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructor for ExcelData class.</span>
 
 <span class="sd">        Parameters:</span>
+<span class="sd">        </span>
 <span class="sd">        file_path (str): Path to the Excel file.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_file_path</span> <span class="o">=</span> <span class="n">file_path</span>
@@ -71,14 +60,17 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_used_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;FILE_ID&#39;</span><span class="p">,</span> <span class="s1">&#39;AGE_AT_SCAN&#39;</span><span class="p">,</span> <span class="s1">&#39;SEX&#39;</span><span class="p">,</span><span class="s1">&#39;FIQ&#39;</span><span class="p">,</span> <span class="s1">&#39;DX_GROUP&#39;</span><span class="p">,</span> <span class="s1">&#39;lh_MeanThickness&#39;</span><span class="p">,</span> <span class="s1">&#39;rh_MeanThickness&#39;</span><span class="p">,</span> <span class="s1">&#39;lhCortexVol&#39;</span><span class="p">,</span> <span class="s1">&#39;rhCortexVol&#39;</span><span class="p">,</span> <span class="s1">&#39;lhCerebralWhiteMatterVol&#39;</span><span class="p">,</span> <span class="s1">&#39;rhCerebralWhiteMatterVol&#39;</span><span class="p">,</span> <span class="s1">&#39;TotalGrayVol&#39;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_load_data</span><span class="p">()</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">normalisation</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_normalize_columns</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_normalize_columns</span></div>
+
 
     <span class="k">def</span> <span class="nf">_load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_file_path</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;File </span><span class="si">{}</span><span class="s2"> doesn&#39;t exist!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_file_path</span><span class="p">))</span>
 
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load data from the Excel file.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load data from the Excel file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_data_frame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_file_path</span><span class="p">)[</span><span class="bp">self</span><span class="o">.</span><span class="n">_used_columns</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
@@ -90,14 +82,15 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">data_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the data grid.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The data grid extracted from the input .xlsx file (pandas).&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_numpy_data</span>
 
     <span class="k">def</span> <span class="nf">_remove_column</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column_name</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove a selected column from the data frame.</span>
-
+<span class="sd">                </span>
 <span class="sd">        Parameters:</span>
+<span class="sd">        </span>
 <span class="sd">        column_name (str): Name of the column to select.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">column_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_frame</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
@@ -120,6 +113,9 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_numpy_data</span><span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_numpy_data</span><span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">]</span> <span class="o">/</span> <span class="n">column_normalise</span>
 
     <span class="k">def</span> <span class="nf">_shuffle_rows</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Shuffle all rows in the data frame.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data_frame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_frame</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ExcelData.Select_column">
@@ -129,9 +125,11 @@
 <span class="sd">        Get a selected column from the data frame.</span>
 
 <span class="sd">        Parameters:</span>
+<span class="sd">        </span>
 <span class="sd">        column_name (str): Name of the column to select.</span>
 <span class="sd">        </span>
 <span class="sd">        Returns:</span>
+<span class="sd">        </span>
 <span class="sd">        numpy.ndarray: Selected column as a numpy array.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">column_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_frame</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
@@ -161,9 +159,16 @@
 
 
 <h3>Navigation</h3>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../modules.html">src</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../IData.html">Data interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ExcelData.html">Excel data class</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../IRegression.html">Regression model interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../RegressionModel.html">Regression model class</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ConsoleApp.html">User interface</a></li>
 </ul>
 
 <div class="relations">

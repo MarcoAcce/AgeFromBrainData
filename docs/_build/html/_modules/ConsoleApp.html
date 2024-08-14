@@ -39,6 +39,7 @@
 <div class="viewcode-block" id="ConsoleApp">
 <a class="viewcode-back" href="../ConsoleApp.html#ConsoleApp.ConsoleApp">[docs]</a>
 <span class="k">def</span> <span class="nf">ConsoleApp</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Function providing a command line UI for the model.&quot;&quot;&quot;</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Welcome to the Regression Model Training Console App!&quot;</span><span class="p">)</span>
  
     <span class="c1">#default values for the model</span>
@@ -53,7 +54,7 @@
 
     <span class="c1"># Prompt the user for input</span>
     <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">skip</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Do you want to use the default values for the moedl? (yes/no): &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="c1">#- resume not yet implemented</span>
+        <span class="n">skip</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Do you want to use the default values for the model? (yes/no): &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="c1">#- resume not yet implemented</span>
         <span class="k">if</span> <span class="n">skip</span> <span class="o">==</span> <span class="s2">&quot;yes&quot;</span> <span class="ow">or</span> <span class="n">skip</span> <span class="o">==</span> <span class="s2">&quot;no&quot;</span><span class="p">:</span>
             <span class="k">break</span>
         <span class="k">else</span><span class="p">:</span>
@@ -158,9 +159,16 @@
 
 
 <h3>Navigation</h3>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../modules.html">src</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../IData.html">Data interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ExcelData.html">Excel data class</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../IRegression.html">Regression model interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../RegressionModel.html">Regression model class</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ConsoleApp.html">User interface</a></li>
 </ul>
 
 <div class="relations">

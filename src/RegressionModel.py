@@ -4,44 +4,19 @@ from unittest import skip
 import matplotlib.pyplot as plt
 from keras.models import Model, load_model
 from keras.layers import Dense, Input
-from keras.callbacks import Callback, ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
-import datetime
-from ExcelData import IData,ExcelData
+from keras.callbacks import  ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
 from datetime import datetime
 
-class IRegression:
-    """Interface for regression classes."""
-    
-    def Compile_Model(self, shape=None, checkpoint_path = None):
-        raise NotImplementedError("Subclasses must implement Compile_Model method")
-
-    def Start_Training(self, X, y, save_checkpoint_path = None
-                       , validation_split = 0.75, epochs = None, verbose_training = 0):
-        raise NotImplementedError("Subclasses must implement Start_Training method")
-
-    def Plot_History(self):
-        raise NotImplementedError("Subclasses must implement Plot_History method")
-
-class PrintProgress(Callback):
-    """Callback for printing progress during model training."""
-    _number_of_epochs_per_print=3
-    @property
-    def number_of_epochs_per_print(self):
-        return self._number_of_epochs_per_print
-    @number_of_epochs_per_print.setter
-    def number_of_epochs_per_print(self, num):
-        self._number_of_epochs_per_print=num
-    def on_epoch_end(self, epoch, logs=None, ):
-        if epoch % self.number_of_epochs_per_print == 0:
-            print(f"Epoch {epoch}/{self.params['epochs']} - training loss: {logs['loss']:.4f} - val_loss: {logs['val_loss']:.4f}")
-            import os
-            
+from IData import IData
+from IRegression import IRegression
+from Callbacks import PrintProgress
 
 class RegressionModel(IRegression):
     """Class for training and plotting history of a regression model using MLP."""
     
     @property
     def epoch_number(self):
+        """Property containg the number of epoch used for training the model."""
         return self._epoch_number
     
     @epoch_number.setter
@@ -53,6 +28,7 @@ class RegressionModel(IRegression):
 
     @property
     def stopping_patience(self):
+        """Property containg the patience used for the EarlyStopping callback during training."""
         return self._stopping_patience
     
     @stopping_patience.setter
@@ -67,9 +43,13 @@ class RegressionModel(IRegression):
         Constructor for RegressionModel_mlp class.
 
         Parameters:
+        
         hidden_layers (int): Number of hidden layers.
+        
         nodes_per_layer (int): Number of nodes in each hidden layer.
-        epochs (int): Number of epochs for training.
+        
+        epochs (int): Number of epochs for training. Default at 100.
+        
         patience (int): Patience for early stopping.
         """
         self._hidden_layers = hidden_layers
@@ -80,7 +60,18 @@ class RegressionModel(IRegression):
         self._epoch_number = epochs        
 
     def Compile_Model(self,shape=None, checkpoint_path = None, number_of_epochs_per_print = 3):
-        """Define the architecture of the regression model."""
+        """
+        Define the architecture of the regression model.
+        
+        
+        Parameters:
+        
+        shape: the shape of the data for training and evaluation.
+        
+        checkpoint_path (string): Path to the checkpoint to be loaded. If left empty no checkpoint will be used.
+        
+        number_of_epochs_per_print (int): Number of epochs between prints of the PrintProgress callback during training. Default is 3. 
+        """
         if (shape == None and checkpoint_path == None):
             print("Required arguments not provided.")
             return
@@ -116,10 +107,19 @@ class RegressionModel(IRegression):
         Train the regression model.
 
         Parameters:
+        
         X (numpy.ndarray): Input features.
+        
         y (numpy.ndarray): Target values.
         
+        save_checkpoint_path (string): Path to the directory used for saving checkpoints during training.
+        
+        validation_split (float): Fraction used to define the training/validation split for the model. Default at 0.75.
+        
+        epochs (int): Number of epochs for training. Default at the value set in the constructor.
+        
         Returns:
+        
         history: Training history.
         """
         if epochs == None:
@@ -138,7 +138,8 @@ class RegressionModel(IRegression):
     
     def Plot_History(self):
         """
-        Plot the training and validation loss history.
+        Plot the training and validation loss history. 
+        Saves the plot as a .png.
         """
         if self._history is None:
             print("No training history available. Please train the model first.")
@@ -166,5 +167,3 @@ class RegressionModel(IRegression):
         path += str(datetime.now().strftime("%Y-%m-%d %H-%M-%S"))
         return path
     
-
-

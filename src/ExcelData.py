@@ -3,18 +3,7 @@ from keras.src.random import normal
 import pandas as pd
 import numpy
 
-
-class IData:
-    """Interface for data classes."""
-    @property
-    def data_grid(self):
-        """Abstract property representing the data grid."""
-        raise NotImplementedError("Subclasses must implement data_grid property")
-
-    @property
-    def selected_column(self):
-        """Abstract property representing the selected column."""
-        raise NotImplementedError("Subclasses must implement selected_column property")
+from IData import IData
 
 
 class ExcelData(IData):
@@ -24,6 +13,7 @@ class ExcelData(IData):
         Constructor for ExcelData class.
 
         Parameters:
+        
         file_path (str): Path to the Excel file.
         """
         self._file_path = file_path
@@ -41,7 +31,9 @@ class ExcelData(IData):
         if not os.path.exists(self._file_path):
             raise ValueError("File {} doesn't exist!".format(self._file_path))
 
-        """Load data from the Excel file."""
+        """
+        Load data from the Excel file.
+        """
         try:
             self._data_frame = pd.read_excel(self._file_path)[self._used_columns]
         except Exception as e:
@@ -53,14 +45,15 @@ class ExcelData(IData):
 
     @property
     def data_grid(self):
-        """Get the data grid."""
+        """The data grid extracted from the input .xlsx file (pandas)."""
         return self._numpy_data
 
     def _remove_column(self, column_name):
         """
         Remove a selected column from the data frame.
-
+                
         Parameters:
+        
         column_name (str): Name of the column to select.
         """
         if column_name in self._data_frame.columns:
@@ -83,6 +76,9 @@ class ExcelData(IData):
                 self._numpy_data[x,y] = self._numpy_data[x,y] / column_normalise
 
     def _shuffle_rows(self):
+        """
+        Shuffle all rows in the data frame.
+        """
         self._data_frame = self._data_frame.sample(frac=1).reset_index(drop=True)
 
     def Select_column(self, column_name):
@@ -90,9 +86,11 @@ class ExcelData(IData):
         Get a selected column from the data frame.
 
         Parameters:
+        
         column_name (str): Name of the column to select.
         
         Returns:
+        
         numpy.ndarray: Selected column as a numpy array.
         """
         if column_name in self._data_frame.columns:

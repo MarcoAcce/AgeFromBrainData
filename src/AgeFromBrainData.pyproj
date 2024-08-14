@@ -22,6 +22,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ExcelData.py" />
+    <Compile Include="IData.py" />
     <Compile Include="Optimizator.py" />
     <Compile Include="RegressionModel.py">
       <SubType>Code</SubType>

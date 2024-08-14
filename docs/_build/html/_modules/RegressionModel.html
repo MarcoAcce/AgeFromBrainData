@@ -36,56 +36,12 @@
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">load_model</span>
 <span class="kn">from</span> <span class="nn">keras.layers</span> <span class="kn">import</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Input</span>
-<span class="kn">from</span> <span class="nn">keras.callbacks</span> <span class="kn">import</span> <span class="n">Callback</span><span class="p">,</span> <span class="n">ModelCheckpoint</span><span class="p">,</span> <span class="n">EarlyStopping</span><span class="p">,</span> <span class="n">ReduceLROnPlateau</span>
-<span class="kn">import</span> <span class="nn">datetime</span>
-<span class="kn">from</span> <span class="nn">ExcelData</span> <span class="kn">import</span> <span class="n">IData</span><span class="p">,</span><span class="n">ExcelData</span>
+<span class="kn">from</span> <span class="nn">keras.callbacks</span> <span class="kn">import</span>  <span class="n">ModelCheckpoint</span><span class="p">,</span> <span class="n">EarlyStopping</span><span class="p">,</span> <span class="n">ReduceLROnPlateau</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 
-<div class="viewcode-block" id="IRegression">
-<a class="viewcode-back" href="../RegressionModel.html#RegressionModel.IRegression">[docs]</a>
-<span class="k">class</span> <span class="nc">IRegression</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Interface for regression classes.&quot;&quot;&quot;</span>
-    
-<div class="viewcode-block" id="IRegression.Compile_Model">
-<a class="viewcode-back" href="../RegressionModel.html#RegressionModel.IRegression.Compile_Model">[docs]</a>
-    <span class="k">def</span> <span class="nf">Compile_Model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">checkpoint_path</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Subclasses must implement Compile_Model method&quot;</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="IRegression.Start_Training">
-<a class="viewcode-back" href="../RegressionModel.html#RegressionModel.IRegression.Start_Training">[docs]</a>
-    <span class="k">def</span> <span class="nf">Start_Training</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">save_checkpoint_path</span> <span class="o">=</span> <span class="kc">None</span>
-                       <span class="p">,</span> <span class="n">validation_split</span> <span class="o">=</span> <span class="mf">0.75</span><span class="p">,</span> <span class="n">epochs</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">verbose_training</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Subclasses must implement Start_Training method&quot;</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="IRegression.Plot_History">
-<a class="viewcode-back" href="../RegressionModel.html#RegressionModel.IRegression.Plot_History">[docs]</a>
-    <span class="k">def</span> <span class="nf">Plot_History</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Subclasses must implement Plot_History method&quot;</span><span class="p">)</span></div>
-</div>
-
-
-<div class="viewcode-block" id="PrintProgress">
-<a class="viewcode-back" href="../RegressionModel.html#RegressionModel.PrintProgress">[docs]</a>
-<span class="k">class</span> <span class="nc">PrintProgress</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Callback for printing progress during model training.&quot;&quot;&quot;</span>
-    <span class="n">_number_of_epochs_per_print</span><span class="o">=</span><span class="mi">3</span>
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">number_of_epochs_per_print</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_number_of_epochs_per_print</span>
-    <span class="nd">@number_of_epochs_per_print</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">number_of_epochs_per_print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_number_of_epochs_per_print</span><span class="o">=</span><span class="n">num</span>
-<div class="viewcode-block" id="PrintProgress.on_epoch_end">
-<a class="viewcode-back" href="../RegressionModel.html#RegressionModel.PrintProgress.on_epoch_end">[docs]</a>
-    <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="p">):</span>
-        <span class="k">if</span> <span class="n">epoch</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">number_of_epochs_per_print</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;epochs&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> - training loss: </span><span class="si">{</span><span class="n">logs</span><span class="p">[</span><span class="s1">&#39;loss&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> - val_loss: </span><span class="si">{</span><span class="n">logs</span><span class="p">[</span><span class="s1">&#39;val_loss&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="kn">import</span> <span class="nn">os</span></div>
-</div>
-
-            
+<span class="kn">from</span> <span class="nn">IData</span> <span class="kn">import</span> <span class="n">IData</span>
+<span class="kn">from</span> <span class="nn">IRegression</span> <span class="kn">import</span> <span class="n">IRegression</span>
+<span class="kn">from</span> <span class="nn">Callbacks</span> <span class="kn">import</span> <span class="n">PrintProgress</span>
 
 <div class="viewcode-block" id="RegressionModel">
 <a class="viewcode-back" href="../RegressionModel.html#RegressionModel.RegressionModel">[docs]</a>
@@ -94,6 +50,7 @@
     
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">epoch_number</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Property containg the number of epoch used for training the model.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_epoch_number</span>
     
     <span class="nd">@epoch_number</span><span class="o">.</span><span class="n">setter</span>
@@ -105,6 +62,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">stopping_patience</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Property containg the patience used for the EarlyStopping callback during training.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stopping_patience</span>
     
     <span class="nd">@stopping_patience</span><span class="o">.</span><span class="n">setter</span>
@@ -114,14 +72,20 @@
         <span class="k">else</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cannot change the parameters of an already defined method&quot;</span><span class="p">)</span>
         
 
+<div class="viewcode-block" id="RegressionModel.__init__">
+<a class="viewcode-back" href="../RegressionModel.html#RegressionModel.RegressionModel.__init__">[docs]</a>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hidden_layers</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nodes_per_layer</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">patience</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructor for RegressionModel_mlp class.</span>
 
 <span class="sd">        Parameters:</span>
+<span class="sd">        </span>
 <span class="sd">        hidden_layers (int): Number of hidden layers.</span>
+<span class="sd">        </span>
 <span class="sd">        nodes_per_layer (int): Number of nodes in each hidden layer.</span>
-<span class="sd">        epochs (int): Number of epochs for training.</span>
+<span class="sd">        </span>
+<span class="sd">        epochs (int): Number of epochs for training. Default at 100.</span>
+<span class="sd">        </span>
 <span class="sd">        patience (int): Patience for early stopping.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_hidden_layers</span> <span class="o">=</span> <span class="n">hidden_layers</span>
@@ -129,12 +93,24 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_nodes_per_layer</span> <span class="o">=</span> <span class="n">nodes_per_layer</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Placeholder for the Keras model</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_history</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Placeholder for the training history</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_epoch_number</span> <span class="o">=</span> <span class="n">epochs</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_epoch_number</span> <span class="o">=</span> <span class="n">epochs</span>        </div>
+
 
 <div class="viewcode-block" id="RegressionModel.Compile_Model">
 <a class="viewcode-back" href="../RegressionModel.html#RegressionModel.RegressionModel.Compile_Model">[docs]</a>
     <span class="k">def</span> <span class="nf">Compile_Model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">checkpoint_path</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">number_of_epochs_per_print</span> <span class="o">=</span> <span class="mi">3</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Define the architecture of the regression model.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Define the architecture of the regression model.</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">        </span>
+<span class="sd">        shape: the shape of the data for training and evaluation.</span>
+<span class="sd">        </span>
+<span class="sd">        checkpoint_path (string): Path to the checkpoint to be loaded. If left empty no checkpoint will be used.</span>
+<span class="sd">        </span>
+<span class="sd">        number_of_epochs_per_print (int): Number of epochs between prints of the PrintProgress callback during training. Default is 3. </span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">shape</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">checkpoint_path</span> <span class="o">==</span> <span class="kc">None</span><span class="p">):</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Required arguments not provided.&quot;</span><span class="p">)</span>
             <span class="k">return</span>
@@ -173,10 +149,19 @@
 <span class="sd">        Train the regression model.</span>
 
 <span class="sd">        Parameters:</span>
+<span class="sd">        </span>
 <span class="sd">        X (numpy.ndarray): Input features.</span>
+<span class="sd">        </span>
 <span class="sd">        y (numpy.ndarray): Target values.</span>
 <span class="sd">        </span>
+<span class="sd">        save_checkpoint_path (string): Path to the directory used for saving checkpoints during training.</span>
+<span class="sd">        </span>
+<span class="sd">        validation_split (float): Fraction used to define the training/validation split for the model. Default at 0.75.</span>
+<span class="sd">        </span>
+<span class="sd">        epochs (int): Number of epochs for training. Default at the value set in the constructor.</span>
+<span class="sd">        </span>
 <span class="sd">        Returns:</span>
+<span class="sd">        </span>
 <span class="sd">        history: Training history.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">epochs</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
@@ -198,7 +183,8 @@
 <a class="viewcode-back" href="../RegressionModel.html#RegressionModel.RegressionModel.Plot_History">[docs]</a>
     <span class="k">def</span> <span class="nf">Plot_History</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Plot the training and validation loss history.</span>
+<span class="sd">        Plot the training and validation loss history. </span>
+<span class="sd">        Saves the plot as a .png.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_history</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No training history available. Please train the model first.&quot;</span><span class="p">)</span>
@@ -216,13 +202,10 @@
         <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="RegressionModel.Save_Model">
-<a class="viewcode-back" href="../RegressionModel.html#RegressionModel.RegressionModel.Save_Model">[docs]</a>
     <span class="k">def</span> <span class="nf">Save_Model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
         <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_save_path</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;.keras&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">save_weights</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;.weights.h5&quot;</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">save_weights</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;.weights.h5&quot;</span><span class="p">)</span>
         
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">_save_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -231,8 +214,6 @@
         <span class="k">return</span> <span class="n">path</span></div>
 
     
-
-
 </pre></div>
 
           </div>
@@ -251,9 +232,16 @@
 
 
 <h3>Navigation</h3>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../modules.html">src</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../IData.html">Data interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ExcelData.html">Excel data class</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../IRegression.html">Regression model interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../RegressionModel.html">Regression model class</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ConsoleApp.html">User interface</a></li>
 </ul>
 
 <div class="relations">

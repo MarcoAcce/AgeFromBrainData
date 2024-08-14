@@ -13,7 +13,7 @@
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="src" href="modules.html" />
+    <link rel="next" title="Data interface" href="IData.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -33,14 +33,65 @@
             
   <section id="welcome-to-agefrombraindata-s-documentation">
 <h1>Welcome to AgeFromBrainData’s documentation!<a class="headerlink" href="#welcome-to-agefrombraindata-s-documentation" title="Link to this heading">¶</a></h1>
+</section>
+<section id="data-handling">
+<h1>Data handling<a class="headerlink" href="#data-handling" title="Link to this heading">¶</a></h1>
 <div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">src</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ConsoleApp.html">ConsoleApp module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ExcelData.html">ExcelData module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Optimizator.html">Optimizator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="RegressionModel.html">RegressionModel module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="IData.html">Data interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="IData.html#IData.IData"><code class="docutils literal notranslate"><span class="pre">IData</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="IData.html#IData.IData.data_grid"><code class="docutils literal notranslate"><span class="pre">IData.data_grid</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="IData.html#IData.IData.selected_column"><code class="docutils literal notranslate"><span class="pre">IData.selected_column</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ExcelData.html">Excel data class</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ExcelData.html#ExcelData.ExcelData"><code class="docutils literal notranslate"><span class="pre">ExcelData</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ExcelData.html#ExcelData.ExcelData.Select_column"><code class="docutils literal notranslate"><span class="pre">ExcelData.Select_column()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ExcelData.html#ExcelData.ExcelData.__init__"><code class="docutils literal notranslate"><span class="pre">ExcelData.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ExcelData.html#ExcelData.ExcelData.data_grid"><code class="docutils literal notranslate"><span class="pre">ExcelData.data_grid</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="machine-learning">
+<h1>Machine learning<a class="headerlink" href="#machine-learning" title="Link to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="IRegression.html">Regression model interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="IRegression.html#IRegression.IRegression"><code class="docutils literal notranslate"><span class="pre">IRegression</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="IRegression.html#IRegression.IRegression.Compile_Model"><code class="docutils literal notranslate"><span class="pre">IRegression.Compile_Model()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="IRegression.html#IRegression.IRegression.Plot_History"><code class="docutils literal notranslate"><span class="pre">IRegression.Plot_History()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="IRegression.html#IRegression.IRegression.Start_Training"><code class="docutils literal notranslate"><span class="pre">IRegression.Start_Training()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="RegressionModel.html">Regression model class</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="RegressionModel.html#RegressionModel.RegressionModel"><code class="docutils literal notranslate"><span class="pre">RegressionModel</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="RegressionModel.html#RegressionModel.RegressionModel.Compile_Model"><code class="docutils literal notranslate"><span class="pre">RegressionModel.Compile_Model()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="RegressionModel.html#RegressionModel.RegressionModel.Plot_History"><code class="docutils literal notranslate"><span class="pre">RegressionModel.Plot_History()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="RegressionModel.html#RegressionModel.RegressionModel.Start_Training"><code class="docutils literal notranslate"><span class="pre">RegressionModel.Start_Training()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="RegressionModel.html#RegressionModel.RegressionModel.__init__"><code class="docutils literal notranslate"><span class="pre">RegressionModel.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="RegressionModel.html#RegressionModel.RegressionModel.epoch_number"><code class="docutils literal notranslate"><span class="pre">RegressionModel.epoch_number</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="RegressionModel.html#RegressionModel.RegressionModel.stopping_patience"><code class="docutils literal notranslate"><span class="pre">RegressionModel.stopping_patience</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="user-interface">
+<h1>User interface<a class="headerlink" href="#user-interface" title="Link to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ConsoleApp.html">User interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ConsoleApp.html#ConsoleApp.ConsoleApp"><code class="docutils literal notranslate"><span class="pre">ConsoleApp()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -72,16 +123,23 @@
 
 
 <h3>Navigation</h3>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">src</a></li>
+<li class="toctree-l1"><a class="reference internal" href="IData.html">Data interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ExcelData.html">Excel data class</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="IRegression.html">Regression model interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RegressionModel.html">Regression model class</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ConsoleApp.html">User interface</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="#">Documentation overview</a><ul>
-      <li>Next: <a href="modules.html" title="next chapter">src</a></li>
+      <li>Next: <a href="IData.html" title="next chapter">Data interface</a></li>
   </ul></li>
 </ul>
 </div>

@@ -6,12 +6,23 @@
 Welcome to AgeFromBrainData's documentation!
 ============================================
 
+Data handling
+=============
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   IData
+   ExcelData
 
-   modules
+Machine learning
+================
+.. toctree::
+   IRegression
+   RegressionModel
 
+User interface
+==============
+.. toctree::
+   ConsoleApp
+   
 Indices and tables
 ==================
 

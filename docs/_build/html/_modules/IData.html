@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Overview: module code &#8212; AgeFromBrainData 0.1 documentation</title>
+    <title>IData &#8212; AgeFromBrainData 0.1 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d1102ebc" />
     <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
     <script src="../_static/documentation_options.js?v=2709fde1"></script>
@@ -29,13 +29,25 @@
 
           <div class="body" role="main">
             
-  <h1>All modules for which code is available</h1>
-<ul><li><a href="ConsoleApp.html">ConsoleApp</a></li>
-<li><a href="ExcelData.html">ExcelData</a></li>
-<li><a href="IData.html">IData</a></li>
-<li><a href="IRegression.html">IRegression</a></li>
-<li><a href="RegressionModel.html">RegressionModel</a></li>
-</ul>
+  <h1>Source code for IData</h1><div class="highlight"><pre>
+<span></span>
+<div class="viewcode-block" id="IData">
+<a class="viewcode-back" href="../IData.html#IData.IData">[docs]</a>
+<span class="k">class</span> <span class="nc">IData</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Interface for data classes.&quot;&quot;&quot;</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">data_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract property representing the data grid.&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Subclasses must implement data_grid property&quot;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">selected_column</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract property representing the selected column.&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Subclasses must implement selected_column property&quot;</span><span class="p">)</span></div>
+
+
+
+</pre></div>
 
           </div>
           
@@ -69,6 +81,8 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Module code</a><ul>
+  </ul></li>
   </ul></li>
 </ul>
 </div>

@@ -1,0 +1,109 @@
+\documentclass{beamer}
+
+% Preamble
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx} 
+\usepackage{amsmath} 
+\usepackage{hyperref} 
+\usepackage{xcolor} 
+
+% Theme setup
+\usetheme{Madrid} 
+\usecolortheme{dolphin}
+
+% Title page details
+\title{Age from brain Data}
+\subtitle{Project presentation}
+\author{Marco Accerenzi}
+\institute{Università di Pisa - Dipartimento di Fisica}
+\date{\today}
+
+% Begin the document
+\begin{document}
+
+% Title Slide
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% Table of Contents
+\begin{frame}{Outline}
+    \tableofcontents
+\end{frame}
+
+% First Slide
+\section{Introduction}
+\begin{frame}{Introduction to the Topic}
+    \begin{itemize}
+        \item Regression model.
+        \item What's Keras.
+        \item Training.
+    \end{itemize}
+\end{frame}
+
+% Second Slide with Equations
+\section{Data manipulations}
+\begin{frame}{Data manipulations}
+    \begin{itemize}
+        \item Pandas.
+        \item Extracting arrays and Numpy.
+        \item Normalising the data.
+    \end{itemize}
+\end{frame}
+
+% Third Slide with an Image
+\section{Training the model}
+\begin{frame}{Including an Image}
+	\begin{itemize}
+		\item Learning algorithms.
+		\item loss function and optimization.
+		\item Callbacks:
+		\begin{itemize}
+			\item EarlyStopping and patience.
+			\item Reducing the learning rate.
+		\end{itemize}
+    \end{itemize}
+\end{frame}
+
+% Fourth Slide
+\section{Optimizing the model's parameters}
+\begin{frame}{Optimizing the model's parameters}
+	\begin{itemize}
+		\item Layers and nodes.
+		\item Validation split.
+		\item Shuffling the data.
+	\end{itemize}
+\end{frame}
+
+% Fifth slide
+\section{Training history}
+\begin{frame}{Including an Image}
+    \begin{itemize}
+        \item Learning algorithms.
+        \item loss function and optimization.
+        \item Callbacks:
+	\begin{itemize}
+		\item EarlyStopping and patience
+		\item Reducing the learning rate
+	\end{itemize}
+    \end{itemize}
+\end{frame}
+
+% Closing slide
+\section{Results and conclusion}
+\begin{frame}{Results and conclusion}
+    \begin{itemize}
+		\item Final values for the loss function and mean error.
+		\item Evaluating new data.
+    \end{itemize}
+\end{frame}
+
+% Backup slides
+\section*{Making an interface for the user}
+\begin{frame}{Making an interface for the user}
+    \begin{itemize}
+		\item to do
+    \end{itemize}
+\end{frame}
+
+\end{document}

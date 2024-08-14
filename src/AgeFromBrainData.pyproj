@@ -21,8 +21,10 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Callbacks.py" />
     <Compile Include="ExcelData.py" />
     <Compile Include="IData.py" />
+    <Compile Include="IRegression.py" />
     <Compile Include="Optimizator.py" />
     <Compile Include="RegressionModel.py">
       <SubType>Code</SubType>

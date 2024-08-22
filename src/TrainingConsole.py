@@ -4,7 +4,7 @@ import numpy
 import ExcelData as ed
 import RegressionModel as rm
 
-def ConsoleApp(X, y):
+def TrainingConsole(X, y):
     """Function providing a command line UI for the model."""
     print("Welcome to the Regression Model Training Console App!")
  
@@ -19,8 +19,8 @@ def ConsoleApp(X, y):
 
     # Prompt the user for input
     while True:
-        skip = input("Do you want to use the default values for the model?", 
-                     " (yes/no): ").strip().lower() 
+        skip = input("Do you want to train the model using the default", 
+                     "  parameters? (yes/no): ").strip().lower() 
         if skip == "yes" or skip == "no":
             break
         else:
@@ -87,6 +87,15 @@ def ConsoleApp(X, y):
             print("Please only eneter yes or no.")
             continue
 
+    mlp = rm.RegressionModel(hidden_layers=number_of_hidden_layers, 
+                             nodes_per_layer=number_of_hidden_nodes)
+    
+    mlp.epoch_number = epoch_number
+    
+    mlp.Compile_Model(X.shape[1], )
+    
+    # Training model ---
+
     while adv_sett == "yes":
         patience = input("Please enter the patience value").strip()
         split = input("Please enter the validation split value").strip()
@@ -98,28 +107,24 @@ def ConsoleApp(X, y):
             print("Error: please input valid int numbers.")
             continue
   
-    #training ---
-
-    mlp = rm.RegressionModel(hidden_layers=number_of_hidden_layers, 
-                             nodes_per_layer=number_of_hidden_nodes, 
-                             patience=patience)
-    mlp.Compile_Model(X.shape[1], )
     if resume_training == "yes":
-       history = mlp.Resume_Training(X, y, from_checkpoint_path = checkpoint, 
-                                     epochs=epoch_number)
+        history = mlp.Resume_Training(X, y, 
+                                      from_checkpoint_path = checkpoint, 
+                                      epochs=epoch_number)
     else:
-        history = mlp.Start_Training(X,y, epochs=epoch_number)
+        if adv_sett == "yes":
+            history = mlp.Start_Training(X,y, epochs=epoch_number,
+                                         stopping_patience=patience,
+                                         validation_split=split)
+        else: history = mlp.Start_Training(X,y, epochs=epoch_number)
+
+    # Saving trained model ---
+
     mlp.Save_Model()
+    #ed.Save_Normalisation()
     mlp.Plot_History()
     
-    while True:
-        pr = input("Do you want to use the model to make predictions?", 
-                   "(yes/no): ").strip().lower()
-        if pr == "yes" or pr == "no":
-            break
-    if pr == "yes":
-        print("Provide the features to use for prediction:")
-        
+    
     
         
 
@@ -127,8 +132,9 @@ def ConsoleApp(X, y):
 if __name__ == "__main__":
     _ = os.system('cls')
     current_directory = os.getcwd()
-    file_path = os.path.join(current_directory, r'input\FS_features_ABIDE_males_someGlobals.xlsx')
+    file_path = os.path.join(current_directory, 
+                             r'input\FS_features_ABIDE_males_someGlobals.xlsx')
     samples = ed.ExcelData(file_path, True)
     my_matrix = samples.data_grid
     age = samples.Select_column('AGE_AT_SCAN')
-    ConsoleApp(my_matrix, age)
+    TrainingConsole(my_matrix, age)

@@ -1,7 +1,6 @@
+from datetime import datetime
 import os
-from keras.src.random import normal
 import pandas as pd
-import numpy
 
 from IData import IData
 
@@ -61,8 +60,9 @@ class ExcelData(IData):
         
         if shuffle : self._shuffle_rows()
         
-        self._numpy_data = self._data_frame.drop(columns=['FILE_ID',                                                    'AGE_AT_SCAN'])\
-                                .to_numpy(copy = False, na_value=-9999, 
+        self._numpy_data = self._data_frame.drop(
+                                        columns=['FILE_ID', 'AGE_AT_SCAN'])\
+                               .to_numpy(copy = False, na_value=-9999, 
                                           dtype=float)
         
         self._selected_column = self._data_frame['AGE_AT_SCAN']\
@@ -105,7 +105,7 @@ class ExcelData(IData):
             for x in range(nrows):
                 if self._numpy_data[x,y] == -9999:
                     continue
-                self._numpy_data[x,y] = self._numpy_data[x,y] / column_normalise
+                self._numpy_data[x,y] = self._numpy_data[x,y] / column_max
 
     def _shuffle_rows(self):
         """
@@ -113,6 +113,23 @@ class ExcelData(IData):
         """
         self._data_frame = self._data_frame.sample(frac=1)\
                             .reset_index(drop=True)
+
+    def Save_Normalisation(self):
+        """
+        Exports the max values of the columns used for training to a 
+        .txt file. The values are the normalisation to be used on new data
+        for the trained model.        
+        """
+        normalisation_path = ("saves/normalisation/" + 
+                              str(datetime.now().strftime(
+                                  "%Y-%m-%d %H-%M-%S") ) +
+                              ".txt")
+
+        with open(normalisation_path, 'w') as file:
+            for column in self._data_frame.drop(self._removed_columns).columns:
+                normalisation = self._data_frame[column].max() 
+                file.write(f"{normalisation}\n")
+        print(f"Normalisation values have been written to {normalisation_path}")
 
     def Select_column(self, column_name):
         """
@@ -135,3 +152,32 @@ class ExcelData(IData):
             raise ValueError(f"Column '{column_name}' not found in ", 
                              "data frame.")
 
+    def External_Normalisation(self, normalisation_array):
+        """
+        Divides all entries in dataframes by the corresponding value
+        found in the input array. Skips all entries equal to -9999.
+        This method should be used to normalise values before making
+        prediction with an already trained array, the normalisation 
+        should match the one used during training.
+        
+        Parameters:
+        
+        normalisation_array : numpy array of the values to be used for
+        the normalisation
+        """
+        ncolumn = self._numpy_data.shape[1]
+        nrows =self._numpy_data.shape[0]
+        
+        if ncolumn != normalisation_array.size: 
+            raise ValueError(f"Normalisation array not of the required size ", 
+                             "for the data frame.")
+        
+        self._load_data(shuffle=False)
+
+        for y in range (ncolumn):
+            column_normalise = normalisation_array[y]
+            
+            for x in range(nrows):
+                if self._numpy_data[x,y] == -9999:
+                    continue
+                self._numpy_data[x,y] = self._numpy_data[x,y] / column_normalise

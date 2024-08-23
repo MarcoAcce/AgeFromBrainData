@@ -20,40 +20,28 @@ class RegressionModel(IRegression):
         path += str(datetime.now().strftime("%Y-%m-%d %H-%M-%S"))
         return path    
 
-    def __init__(self, hidden_layers, nodes_per_layer):
+    def __init__(self, saved_model_path: str = None ):
         """
-        Constructor for RegressionModel class, to be used for 
-        training a new model.
+        Constructor for RegressionModel class.
+        Can be used to either define a new model for training or for 
+        loading an already trained model.
 
         Parameters:
         
-        hidden_layers (int): Number of hidden layers.
-        
-        nodes_per_layer (int): Number of nodes in each hidden layer.
-        """
-        self._hidden_layers = hidden_layers
-        self._nodes_per_layer = nodes_per_layer
-        self._model = None  # Placeholder for the Keras model
-        self._history = None  # Placeholder for the training history
-        
-    def __init__(self, saved_model_path):
-        """
-        Constructor for RegressionModel class, to be used to load
-        an already trained model.
-
-        Parameters:
-        
-        saved_model_path (string): Path to the saved model, should
+        saved_model_path (string): Path to a saved model, should
         point to a .keras file.
         """
-        if not saved_model_path.endswith('.keras'):
-            print("Path doesn't point to a .keras file.")
-        try:
-            self._model = load_model(saved_model_path)
-        except Exception:
-            print("Error while loading the model.")
+        if saved_model_path != None: 
+            try: 
+                self._load_model(saved_model_path)
+                return
+            except Exception: print("Error while loading the model!")
+        self._model = None  # Placeholder for the Keras model
+        self._history = None  # Placeholder for the training history
+       
 
-    def Compile_Model(self,shape=None, checkpoint_path = None):
+    def Compile_Model(self,shape, hidden_layers: int = None, 
+                      nodes_per_layer: int = None):
         """
         Define the architecture of the regression model.
         Shouldn't be used with models loaded from .keras files.
@@ -62,17 +50,17 @@ class RegressionModel(IRegression):
         
         shape: the shape of the data for training and evaluation.
         
-        checkpoint_path (string): Path to the checkpoint to be loaded. 
-        If left empty no checkpoint will be used.
+                
+        hidden_layers (int): Number of hidden layers.
+        
+        nodes_per_layer (int): Number of nodes in each hidden layer.
         
         verbose_training (int): Determines the frequency of prints during
         traing. 0 No prints, 1 prints every 100 epochs, 
         2 prints every 10 epochs, 3 prints for every epoch. Default is 1.
         """
-        if (shape == None and checkpoint_path == None):
-            print("Required arguments not provided.")
-            return
-        
+        self._hidden_layers = hidden_layers
+        self._nodes_per_layer = nodes_per_layer
         input_layer = Input(shape=(shape,))
         hidden_layer = input_layer
         
@@ -81,19 +69,13 @@ class RegressionModel(IRegression):
                                  activation='relu')(hidden_layer)
         output_layer = Dense(1, activation='linear')(hidden_layer)
         self._model = Model(inputs=input_layer, outputs=output_layer)
-        
-        if(checkpoint_path != None): 
-            self._model.load_weights(checkpoint_path)
-        
-        self.plotPath = os.path.sep.join(["output", "model.png"])
-        self.jsonPath = os.path.sep.join(["output", "model.json"])
-        #Compile model
         self._model.compile( loss = "mean_squared_error", optimizer='adam') 
 
 
-    def Start_Training(self, X, y, save_checkpoint_path = None, 
-                       validation_split = 0.75, epochs = 10000, 
-                       stopping_patience = 1000, verbose_training = 1):
+    def Start_Training(self, X, y, save_checkpoint_path: str = None, 
+                       validation_split: float = 0.75, epochs: int = 10000, 
+                       stopping_patience: int = 1000, 
+                       verbose_training: int = 1):
         """
         Train the regression model.
 
@@ -122,11 +104,10 @@ class RegressionModel(IRegression):
         Returns:
         
         history: Training history.
-        """
-        
+        """       
         if self._model is None:
             raise ValueError("Model has not been initialized.",
-                             "Please initialize the model before training.")
+                             "Must initialize the model before training.")
         
         # Define callbacks    
         self._define_callbacks(stopping_patience, verbose_training, 
@@ -170,7 +151,7 @@ class RegressionModel(IRegression):
         plt.savefig(path)
         plt.show()
 
-    def Save_Model(self, path = ""):
+    def Save_Model(self, path: int = ""):
         path = self._save_path
         self._model.save(path + ".keras")
         self._model.save_weights(path + ".weights.h5")
@@ -224,3 +205,16 @@ class RegressionModel(IRegression):
                                              save_weights_only = True)
         self._callbacks.append(checkpoint)
     
+    def _load_model(self,saved_model_path):
+        """
+        Constructor for RegressionModel class, to be used to load
+        an already trained model.
+
+        Parameters:
+      
+        saved_model_path (string): Path to a saved model, should
+        point to a .keras file.
+        """
+        if not saved_model_path.endswith('.keras'):
+            raise ValueError("Path doesn't point to a .keras file.")
+        self._model = load_model(saved_model_path)

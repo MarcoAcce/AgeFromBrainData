@@ -31,13 +31,12 @@ class RegressionModel(IRegression):
         saved_model_path (string): Path to a saved model, should
         point to a .keras file.
         """
-        if saved_model_path != None: 
-            try: 
-                self._load_model(saved_model_path)
-                return
-            except Exception: print("Error while loading the model!")
-        self._model = None  # Placeholder for the Keras model
         self._history = None  # Placeholder for the training history
+        if saved_model_path != None: 
+            try: self._model = self._load_model(saved_model_path)
+            except Exception: print("Error while loading the model!")
+        else: self._model = None  # Placeholder for the Keras model
+
        
 
     def Compile_Model(self,shape, hidden_layers: int = None, 
@@ -209,7 +208,9 @@ class RegressionModel(IRegression):
         """
         Constructor for RegressionModel class, to be used to load
         an already trained model.
-
+        This will load and uncompiled model, usable for inference but
+        not for training.
+        
         Parameters:
       
         saved_model_path (string): Path to a saved model, should
@@ -217,4 +218,4 @@ class RegressionModel(IRegression):
         """
         if not saved_model_path.endswith('.keras'):
             raise ValueError("Path doesn't point to a .keras file.")
-        self._model = load_model(saved_model_path)
+        self._model = load_model(saved_model_path, compile=False)

@@ -4,7 +4,7 @@ import os
 
 current_directory = os.getcwd()
 input_file = os.path.join(
-    current_directory, r'input\FS_features_ABIDE_males.xlsx')
+    current_directory, r'input\FS_features_ABIDE_males_someGlobals.xlsx')
 
 # Load the original .xlsx file
 df = pd.read_excel(input_file)

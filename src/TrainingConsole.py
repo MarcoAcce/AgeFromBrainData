@@ -99,6 +99,7 @@ def TrainingConsole(X, y):
         mlp.Save_Model()
         #ed.Save_Normalisation()
         mlp.Plot_History()
+    return mlp
     
 
 if __name__ == "__main__":
@@ -106,7 +107,12 @@ if __name__ == "__main__":
     current_directory = os.getcwd()
     file_path = os.path.join(current_directory, 
                              r'input\FS_features_ABIDE_males_someGlobals.xlsx')
-    samples = ed.ExcelData(file_path, True)
+    samples = ed.ExcelData(file_path, True, True)
     my_matrix = samples.data_grid
     age = samples.Select_column('AGE_AT_SCAN')
-    TrainingConsole(my_matrix, age)
+    model = TrainingConsole(my_matrix, age)
+    
+    samples = ed.ExcelData(file_path, normalisation = True, shuffle = False)
+
+    predicted_ages = model._model.predict(my_matrix)
+    print(predicted_ages)

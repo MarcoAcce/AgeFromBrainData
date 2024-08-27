@@ -34,6 +34,22 @@
             
   <section id="module-Optimizator">
 <span id="optimizator-script"></span><h1>Optimizator script<a class="headerlink" href="#module-Optimizator" title="Link to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="Optimizator.Optimizator">
+<span class="sig-prename descclassname"><span class="pre">Optimizator.</span></span><span class="sig-name descname"><span class="pre">Optimizator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">possible_hidden_layers_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">possible_nodes_number</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Optimizator.html#Optimizator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Optimizator.Optimizator" title="Link to this definition">¶</a></dt>
+<dd><p>Function to cycles through a number of possible model configurations
+and train for a limited time, to decide on the best configuration for
+the final model.</p>
+<p>Parameters:
+X (ndarray): Numpy array containg the featurs for model training</p>
+<p>y (ndarray): Numpy array of the samples’ labels for training.</p>
+<p>possible_hidden_layers_number: Array of list of integer numbers,
+containing all possible numbers of hidden layers of the model.</p>
+<p>possible_nodes_number: Array of list of integer numbers,
+containing all possible numbers of nodes for the hidden layers
+of the model.</p>
+</dd></dl>
+
 </section>
 
 
@@ -66,7 +82,10 @@
 <li class="toctree-l1"><a class="reference internal" href="PredictionsConsole.html">Predictions user interface</a></li>
 </ul>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Optimizator script</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Optimizator script</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Optimizator.Optimizator"><code class="docutils literal notranslate"><span class="pre">Optimizator()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="SplitExcel.html">SplitExcel script</a></li>
 </ul>
 

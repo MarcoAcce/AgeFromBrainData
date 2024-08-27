@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Optimizator &#8212; Age From Brain Data 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for Optimizator</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;TF_CPP_MIN_LOG_LEVEL&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;2&#39;</span>
+<span class="kn">import</span> <span class="nn">ExcelData</span> <span class="k">as</span> <span class="nn">ed</span>
+<span class="kn">import</span> <span class="nn">RegressionModel</span> <span class="k">as</span> <span class="nn">rm</span>
+
+<div class="viewcode-block" id="Optimizator">
+<a class="viewcode-back" href="../Optimizator.html#Optimizator.Optimizator">[docs]</a>
+<span class="k">def</span> <span class="nf">Optimizator</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
+                <span class="n">possible_hidden_layers_number</span><span class="p">,</span>
+                <span class="n">possible_nodes_number</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to cycles through a number of possible model configurations</span>
+<span class="sd">    and train for a limited time, to decide on the best configuration for</span>
+<span class="sd">    the final model.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters:</span>
+<span class="sd">    X (ndarray): Numpy array containg the featurs for model training</span>
+<span class="sd">    </span>
+<span class="sd">    y (ndarray): Numpy array of the samples&#39; labels for training.</span>
+<span class="sd">    </span>
+<span class="sd">    possible_hidden_layers_number: Array of list of integer numbers, </span>
+<span class="sd">    containing all possible numbers of hidden layers of the model.</span>
+<span class="sd">    </span>
+<span class="sd">    possible_nodes_number: Array of list of integer numbers, </span>
+<span class="sd">    containing all possible numbers of nodes for the hidden layers </span>
+<span class="sd">    of the model.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">layers</span> <span class="ow">in</span> <span class="n">possible_hidden_layers_number</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">nodes</span> <span class="ow">in</span> <span class="n">possible_nodes_number</span><span class="p">:</span>
+            
+            <span class="k">if</span> <span class="n">layers</span><span class="o">*</span><span class="n">nodes</span> <span class="o">&gt;</span> <span class="mi">14</span><span class="p">:</span> <span class="k">continue</span>
+            
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Starting | layers: </span><span class="si">{</span><span class="n">layers</span><span class="si">}</span><span class="s2">, nodes: </span><span class="si">{</span><span class="n">nodes</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">mlp</span> <span class="o">=</span> <span class="n">rm</span><span class="o">.</span><span class="n">RegressionModel</span><span class="p">(</span><span class="n">hidden_layers</span><span class="o">=</span><span class="n">layers</span><span class="p">,</span>
+                                     <span class="n">nodes_per_layer</span><span class="o">=</span><span class="n">nodes</span><span class="p">,</span> <span class="n">patience</span><span class="o">=</span><span class="n">patience</span><span class="p">)</span>
+            <span class="n">mlp</span><span class="o">.</span><span class="n">Compile_Model</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> 
+                              <span class="n">number_of_epochs_per_print</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
+            
+            <span class="n">history</span> <span class="o">=</span> <span class="n">mlp</span><span class="o">.</span><span class="n">Start_Training</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">epoch_number</span><span class="p">)</span>
+            
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Finished | layers: </span><span class="si">{</span><span class="n">layers</span><span class="si">}</span><span class="s2">, nodes: </span><span class="si">{</span><span class="n">nodes</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;cls&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Starting optimization cycle:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">patience</span> <span class="o">=</span> <span class="mi">1000</span>
+    <span class="n">epoch_number</span> <span class="o">=</span> <span class="mi">10000</span>
+    
+    <span class="n">current_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+    <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="n">current_directory</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;input\FS_features_ABIDE_males.xlsx&#39;</span><span class="p">)</span>
+    
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">ed</span><span class="o">.</span><span class="n">ExcelData</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">my_matrix</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">data_grid</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">Select_column</span><span class="p">(</span><span class="s1">&#39;AGE_AT_SCAN&#39;</span><span class="p">)</span>
+    
+    <span class="n">possible_hidden_layers_number</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">possible_nodes_number</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+
+    <span class="n">Optimizator</span><span class="p">(</span><span class="n">my_matrix</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> 
+                <span class="n">possible_hidden_layers_number</span><span class="p">,</span><span class="n">possible_nodes_number</span><span class="p">)</span>
+
+            
+            
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Age From Brain Data</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../IData.html">Data interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ExcelData.html">Excel data class</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../IRegression.html">Regression model interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../RegressionModel.html">Regression model class</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../TrainingConsole.html">Training user interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PredictionsConsole.html">Predictions user interface</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Optimizator.html">Optimizator script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../SplitExcel.html">SplitExcel script</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Marco Accerenzi.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

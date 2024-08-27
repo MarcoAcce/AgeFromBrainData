@@ -25,7 +25,7 @@ User interface
    PredictionsConsole
    
 Scripts and utilities
-==============
+=====================
 .. toctree::
    Optimizator
    SplitExcel   

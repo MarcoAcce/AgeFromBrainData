@@ -21,7 +21,14 @@ Machine learning
 User interface
 ==============
 .. toctree::
-   ConsoleApp
+   TrainingConsole
+   PredictionsConsole
+   
+Scripts and utilities
+==============
+.. toctree::
+   Optimizator
+   SplitExcel   
    
 Indices and tables
 ==================

@@ -105,8 +105,8 @@ def TrainingConsole(X, y):
 if __name__ == "__main__":
     _ = os.system('cls')
     current_directory = os.getcwd()
-    file_path = os.path.join(current_directory, 
-                             r'input\FS_features_ABIDE_males_someGlobals.xlsx')
+    file_path = os.path.join(
+        current_directory,r'input\FS_features_ABIDE_males_someGlobals.xlsx')
     samples = ed.ExcelData(file_path, True, True)
     my_matrix = samples.data_grid
     age = samples.Select_column('AGE_AT_SCAN')

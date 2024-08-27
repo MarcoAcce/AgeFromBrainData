@@ -200,7 +200,8 @@ class RegressionModel(IRegression):
         
         checkpoint = ModelCheckpoint(save_checkpoint_path,
                                              monitor='val_loss', verbose=0,
-                                             save_best_only = True, mode='min',
+                                             save_best_only = True, 
+                                             mode='min', 
                                              save_weights_only = True)
         self._callbacks.append(checkpoint)
     

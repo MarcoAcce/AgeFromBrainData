@@ -1,4 +1,7 @@
 src/input/
+src/saves/
+src/checkpoints/
+src/__pychache__/
 references/
 src/.vs/
 docs_source/_build/

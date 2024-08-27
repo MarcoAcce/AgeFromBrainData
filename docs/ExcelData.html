@@ -37,9 +37,30 @@
 <p>Allows to extract a Pandas dataframe from a .xlsx file and perform basic manipulations to create numpy arrays suitable for machine learning.</p>
 <dl class="py class" id="module-ExcelData">
 <dt class="sig sig-object py" id="ExcelData.ExcelData">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ExcelData.</span></span><span class="sig-name descname"><span class="pre">ExcelData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalisation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ExcelData.html#ExcelData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ExcelData.ExcelData" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ExcelData.</span></span><span class="sig-name descname"><span class="pre">ExcelData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalisation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ExcelData.html#ExcelData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ExcelData.ExcelData" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="IData.html#IData.IData" title="IData.IData"><code class="xref py py-class docutils literal notranslate"><span class="pre">IData</span></code></a></p>
 <p>Class for handling Excel data.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ExcelData.ExcelData.External_Normalisation">
+<span class="sig-name descname"><span class="pre">External_Normalisation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">normalisation_array</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ExcelData.html#ExcelData.External_Normalisation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ExcelData.ExcelData.External_Normalisation" title="Link to this definition">¶</a></dt>
+<dd><p>Divides all entries in dataframes by the corresponding value
+found in the input array. Skips all entries equal to -9999.
+This method should be used to normalise values before making
+prediction with an already trained array, the normalisation
+should match the one used during training.</p>
+<p>Parameters:</p>
+<p>normalisation_array : numpy array of the values to be used for
+the normalisation</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ExcelData.ExcelData.Save_Normalisation">
+<span class="sig-name descname"><span class="pre">Save_Normalisation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ExcelData.html#ExcelData.Save_Normalisation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ExcelData.ExcelData.Save_Normalisation" title="Link to this definition">¶</a></dt>
+<dd><p>Exports the max values of the columns used for training to a
+.txt file. The values are the normalisation to be used on new data
+for the trained model.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="ExcelData.ExcelData.Select_column">
 <span class="sig-name descname"><span class="pre">Select_column</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">column_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ExcelData.html#ExcelData.Select_column"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ExcelData.ExcelData.Select_column" title="Link to this definition">¶</a></dt>
@@ -52,10 +73,13 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ExcelData.ExcelData.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalisation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ExcelData.html#ExcelData.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ExcelData.ExcelData.__init__" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalisation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ExcelData.html#ExcelData.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ExcelData.ExcelData.__init__" title="Link to this definition">¶</a></dt>
 <dd><p>Constructor for ExcelData class.</p>
 <p>Parameters:</p>
 <p>file_path (str): Path to the Excel file.</p>
+<p>normalisation (bool): If true data will be normalized.
+Default is False.</p>
+<p>shuffle (bool): If true rows will be shuffled. Default is False.</p>
 </dd></dl>
 
 <dl class="py property">
@@ -89,6 +113,8 @@
 <li class="toctree-l1"><a class="reference internal" href="IData.html">Data interface</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Excel data class</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#ExcelData.ExcelData"><code class="docutils literal notranslate"><span class="pre">ExcelData</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ExcelData.ExcelData.External_Normalisation"><code class="docutils literal notranslate"><span class="pre">ExcelData.External_Normalisation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ExcelData.ExcelData.Save_Normalisation"><code class="docutils literal notranslate"><span class="pre">ExcelData.Save_Normalisation()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ExcelData.ExcelData.Select_column"><code class="docutils literal notranslate"><span class="pre">ExcelData.Select_column()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ExcelData.ExcelData.__init__"><code class="docutils literal notranslate"><span class="pre">ExcelData.__init__()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ExcelData.ExcelData.data_grid"><code class="docutils literal notranslate"><span class="pre">ExcelData.data_grid</span></code></a></li>
@@ -102,7 +128,12 @@
 <li class="toctree-l1"><a class="reference internal" href="RegressionModel.html">Regression model class</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="ConsoleApp.html">User interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TrainingConsole.html">Training user interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PredictionsConsole.html">Predicitions user interface</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Optimizator.html">Optimizator script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SplitExcel.html">SplitExcel script</a></li>
 </ul>
 
 <div class="relations">

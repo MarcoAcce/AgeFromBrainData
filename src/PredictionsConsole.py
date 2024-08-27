@@ -36,7 +36,8 @@ def PredictionsConsole(skip:boolean = False):
             else: print("Path is not valid.")        
             
     while True:
-            nr_path = input("Please insert the path to the normalisation array.")
+            nr_path = input(
+                 "Please insert the path to the normalisation array.")
             if os.path.isdir(nr_path): break
             else: print("Path is not valid.")        
 

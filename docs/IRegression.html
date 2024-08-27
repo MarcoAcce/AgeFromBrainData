@@ -40,12 +40,15 @@
 <dd><p>Interface for regression classes.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="IRegression.IRegression.Compile_Model">
-<span class="sig-name descname"><span class="pre">Compile_Model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_epochs_per_print</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IRegression.html#IRegression.Compile_Model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IRegression.IRegression.Compile_Model" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">Compile_Model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodes_per_layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IRegression.html#IRegression.Compile_Model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IRegression.IRegression.Compile_Model" title="Link to this definition">¶</a></dt>
 <dd><p>Abstract method for defining the model.</p>
 <p>Parameters:</p>
 <p>shape: the shape of the data for training and evaluation.</p>
-<p>checkpoint_path (string): Path to the checkpoint to be loaded. If left empty no checkpoint will be used.</p>
-<p>number_of_epochs_per_print (int): Number of epochs between prints of the PrintProgress callback during training.</p>
+<p>hidden_layers (int): Number of hidden layers.</p>
+<p>nodes_per_layer (int): Number of nodes in each hidden layer.</p>
+<p>verbose_training (int): Determines the frequency of prints during
+traing. 0 No prints, 1 prints every 100 epochs,
+2 prints every 10 epochs, 3 prints for every epoch. Default is 1.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -56,14 +59,22 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="IRegression.IRegression.Start_Training">
-<span class="sig-name descname"><span class="pre">Start_Training</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_checkpoint_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validation_split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.75</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose_training</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IRegression.html#IRegression.Start_Training"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IRegression.IRegression.Start_Training" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">Start_Training</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_checkpoint_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validation_split</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stopping_patience</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose_training</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/IRegression.html#IRegression.Start_Training"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#IRegression.IRegression.Start_Training" title="Link to this definition">¶</a></dt>
 <dd><p>Abstract method for starting the training.</p>
 <p>Parameters:</p>
 <p>X (numpy.ndarray): Input features.</p>
 <p>y (numpy.ndarray): Target values.</p>
-<p>save_checkpoint_path (string): Path to the directory used for saving checkpoints during training.</p>
-<p>validation_split (float): Fraction used to define the training/validation split for the model. Default at 0.75.</p>
-<p>epochs (int): Number of epochs for training. Default at the value set in the constructor.</p>
+<p>save_checkpoint_path (string): Path to the directory used for saving
+checkpoints during training.</p>
+<p>validation_split (float): Fraction used to define the
+training/validation split for the model. Default at 0.75.</p>
+<p>epochs (int): Number of epochs for training. Default value
+is 10000.</p>
+<p>stopping_patience (int): Number of epoch used for the Early stopping
+callback. Default value is 1000.</p>
+<p>verbose_training (int): Determines the frequency of prints during
+training. 0 No prints, 1 prints every 100 epochs,
+2 prints every 10 epochs, 3 prints for every epoch. Default is 1.</p>
 <p>Returns:</p>
 <p>history: Training history.</p>
 </dd></dl>
@@ -106,7 +117,12 @@
 <li class="toctree-l1"><a class="reference internal" href="RegressionModel.html">Regression model class</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="ConsoleApp.html">User interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TrainingConsole.html">Training user interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PredictionsConsole.html">Predictions user interface</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Optimizator.html">Optimizator script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SplitExcel.html">SplitExcel script</a></li>
 </ul>
 
 <div class="relations">

@@ -31,7 +31,8 @@ class ExcelData(IData):
         
         self._used_columns = ['FILE_ID', 'AGE_AT_SCAN', 'SEX','FIQ',
                               'DX_GROUP', 'lh_MeanThickness', 
-                              'rh_MeanThickness', 'lhCortexVol', 'rhCortexVol',
+                              'rh_MeanThickness', 'lhCortexVol', 
+                              'rhCortexVol',
                               'lhCerebralWhiteMatterVol',
                               'rhCerebralWhiteMatterVol', 'TotalGrayVol']
         self._load_data(shuffle)
@@ -126,10 +127,12 @@ class ExcelData(IData):
                               ".txt")
 
         with open(normalisation_path, 'w') as file:
-            for column in self._data_frame.drop(self._removed_columns).columns:
+            for column in self._data_frame.drop(
+                self._removed_columns).columns:
                 normalisation = self._data_frame[column].max() 
                 file.write(f"{normalisation}\n")
-        print(f"Normalisation values have been written to {normalisation_path}")
+        print(
+            f"Normalisation values have been written to {normalisation_path}")
 
     def Select_column(self, column_name):
         """
@@ -169,7 +172,7 @@ class ExcelData(IData):
         nrows =self._numpy_data.shape[0]
         
         if ncolumn != normalisation_array.size: 
-            raise ValueError(f"Normalisation array not of the required size ", 
+            raise ValueError(f"Normalisation array not of the required size ",
                              "for the data frame.")
         
         self._load_data(shuffle=False)
@@ -180,4 +183,4 @@ class ExcelData(IData):
             for x in range(nrows):
                 if self._numpy_data[x,y] == -9999:
                     continue
-                self._numpy_data[x,y] = self._numpy_data[x,y] / column_normalise
+                self._numpy_data[x,y] = self._numpy_data[x,y]/column_normalise

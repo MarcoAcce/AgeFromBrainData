@@ -38,12 +38,14 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">data_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract property representing the data grid.&quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Subclasses must implement data_grid property&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Subclasses must implement data_grid&quot;</span><span class="p">,</span> 
+                                  <span class="s2">&quot;property&quot;</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">selected_column</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract property representing the selected column.&quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Subclasses must implement selected_column property&quot;</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Subclasses must implement selected_column&quot;</span><span class="p">,</span>
+                                  <span class="s2">&quot;property&quot;</span><span class="p">)</span></div>
 
 
 
@@ -74,7 +76,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../RegressionModel.html">Regression model class</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../ConsoleApp.html">User interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../TrainingConsole.html">Training user interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PredictionsConsole.html">Predicitions user interface</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Optimizator.html">Optimizator script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../SplitExcel.html">SplitExcel script</a></li>
 </ul>
 
 <div class="relations">

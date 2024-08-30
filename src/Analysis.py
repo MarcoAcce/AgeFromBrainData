@@ -7,6 +7,14 @@ import pandas as pd
 
 import SplitExcel as se
 
+"""
+"Script for the data analysis of the predicted ages.
+Splits the model predictions for the entire data set on smaller
+.xlsx files for each data group, then calculates the RMS and MSE
+of the prediction for each group.
+The result are saved in a plot, shown against the resulting RMS and
+MSE for the complete data set.
+"""
 
 if __name__ == '__main__':
     analysis_directory = join(getcwd(),r'analysis')

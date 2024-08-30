@@ -13,6 +13,7 @@
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Analysis script" href="Analysis.html" />
     <link rel="prev" title="Optimizator script" href="Optimizator.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -35,13 +36,15 @@
 <span id="splitexcel-script"></span><h1>SplitExcel script<a class="headerlink" href="#module-SplitExcel" title="Link to this heading">¶</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="SplitExcel.SplitExcel">
-<span class="sig-prename descclassname"><span class="pre">SplitExcel.</span></span><span class="sig-name descname"><span class="pre">SplitExcel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columnForSplitting</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/SplitExcel.html#SplitExcel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#SplitExcel.SplitExcel" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">SplitExcel.</span></span><span class="sig-name descname"><span class="pre">SplitExcel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columnForSplitting</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_directory_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/SplitExcel.html#SplitExcel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#SplitExcel.SplitExcel" title="Link to this definition">¶</a></dt>
 <dd><p>Function to split an .xlsx file into multiple files, grouping together
 all rows which share the same key in a column.</p>
 <p>Parameters:</p>
 <p>file_path (str): path to the file to be splt.</p>
 <p>columnForSplitting (int): index of the column to be used for grouping
 (starts at 0).</p>
+<p>output_directory_path (str): path to the directory to which the output
+will be printed. Default at None, will use the working directory</p>
 </dd></dl>
 
 </section>
@@ -81,6 +84,7 @@ all rows which share the same key in a column.</p>
 <li class="toctree-l2"><a class="reference internal" href="#SplitExcel.SplitExcel"><code class="docutils literal notranslate"><span class="pre">SplitExcel()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="Analysis.html">Analysis script</a></li>
 </ul>
 
 <div class="relations">
@@ -88,6 +92,7 @@ all rows which share the same key in a column.</p>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="Optimizator.html" title="previous chapter">Optimizator script</a></li>
+      <li>Next: <a href="Analysis.html" title="next chapter">Analysis script</a></li>
   </ul></li>
 </ul>
 </div>

@@ -29,6 +29,7 @@ Scripts and utilities
 .. toctree::
    Optimizator
    SplitExcel   
+   Analysis
    
 Indices and tables
 ==================

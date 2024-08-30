@@ -6,4 +6,4 @@ references/
 src/.vs/
 docs_source/_build/
 docs_source/_static/
-analysis/split/
+src/analysis/split/

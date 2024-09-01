@@ -1,7 +1,8 @@
 import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
 from xmlrpc.client import boolean
 from keras.models import load_model
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 import numpy 
 import ExcelData as ed
 import RegressionModel as rm
@@ -23,7 +24,7 @@ def PredictionsConsole(skip:boolean = False):
 
 
     if skip:
-        model_path = "saves\\2024-08-15 20-37-21.keras"
+        model_path = "saves\\2024-09-01 23-22-10.keras"
         nr_path = "saves\\normalisation\\2024-08-22 00-22-46.txt"
         pr_path = "input\\FS_features_ABIDE_males_someGlobals.xlsx" 
         return model_path, nr_path, pr_path
@@ -57,12 +58,12 @@ if __name__ == "__main__":
  
     model_path ,nr_path,pr_path = PredictionsConsole(True)
     
-    samples = ed.ExcelData(pr_path, False, False)
-    samples.External_Normalisation(numpy.loadtxt(nr_path))
+    samples = ed.ExcelData(pr_path, normalisation = False, shuffle = False)
+    samples.Normalisation(numpy.loadtxt(nr_path))
     my_matrix = samples.data_grid
     mlp = load_model(model_path, compile=False)
     predicted_ages = mlp.predict(my_matrix)
 
-    mlp = rm.RegressionModel(saved_model_path = model_path)
-    predicted_ages = mlp.Predict(my_matrix)
+    # mlp = rm.RegressionModel(saved_model_path = model_path)
+    # predicted_ages = mlp.Predict(my_matrix)
     print(predicted_ages)

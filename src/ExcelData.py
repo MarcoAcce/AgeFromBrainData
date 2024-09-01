@@ -1,6 +1,7 @@
 from datetime import datetime
 import os
 import pandas as pd
+import numpy as np
 
 from IData import IData
 
@@ -27,7 +28,7 @@ class ExcelData(IData):
         self._numpy_data = None # numpy array of the data
         self._selected_column = None
         
-        self._removed_columns = 'FILE_ID', 'AGE_AT_SCAN'
+        self._removed_columns = ['FILE_ID', 'AGE_AT_SCAN']
         
         self._used_columns = ['FILE_ID', 'AGE_AT_SCAN', 'SEX','FIQ',
                               'DX_GROUP', 'lh_MeanThickness', 
@@ -36,13 +37,12 @@ class ExcelData(IData):
                               'lhCerebralWhiteMatterVol',
                               'rhCerebralWhiteMatterVol', 'TotalGrayVol']
         self._load_data(shuffle)
-        if normalisation: self._normalize_columns
+        if normalisation: self.Normalisation()
 
     @property
     def data_grid(self):
         """The data grid extracted from the input .xlsx file (pandas)."""
         return self._numpy_data
-
 
     def _load_data(self, shuffle = False):
         """
@@ -96,17 +96,14 @@ class ExcelData(IData):
         """
         ncolumn = self._numpy_data.shape[1]
         nrows =self._numpy_data.shape[0]
-        column_min, column_max = 0
         
         for y in range (ncolumn):
-            column_max = max(self._numpy_data[:,y])
-            column_min = min(self._numpy_data[:,y])
-            column_normalise = column_max - column_min
+            column_normalise = max(self._numpy_data[:,y])
             
             for x in range(nrows):
                 if self._numpy_data[x,y] == -9999:
                     continue
-                self._numpy_data[x,y] = self._numpy_data[x,y] / column_max
+                self._numpy_data[x,y] = self._numpy_data[x,y] / column_normalise
 
     def _shuffle_rows(self):
         """
@@ -128,7 +125,7 @@ class ExcelData(IData):
 
         with open(normalisation_path, 'w') as file:
             for column in self._data_frame.drop(
-                self._removed_columns).columns:
+                columns = self._removed_columns).columns:
                 normalisation = self._data_frame[column].max() 
                 file.write(f"{normalisation}\n")
         print(
@@ -155,32 +152,36 @@ class ExcelData(IData):
             raise ValueError(f"Column '{column_name}' not found in ", 
                              "data frame.")
 
-    def External_Normalisation(self, normalisation_array):
+    def Normalisation(self, normalisation_array = None):
         """
         Divides all entries in dataframes by the corresponding value
         found in the input array. Skips all entries equal to -9999.
         This method should be used to normalise values before making
         prediction with an already trained array, the normalisation 
-        should match the one used during training.
-        
+        should match the one used during training. 
+                
         Parameters:
         
         normalisation_array : numpy array of the values to be used for
-        the normalisation
+        the normalisation. By default will normalise with the maximum
+        value for each column.
+        
         """
-        ncolumn = self._numpy_data.shape[1]
-        nrows =self._numpy_data.shape[0]
         
-        if ncolumn != normalisation_array.size: 
-            raise ValueError(f"Normalisation array not of the required size ",
-                             "for the data frame.")
+        if isinstance(normalisation_array, np.ndarray): 
+            external = True
+        else: external = False
+        data = self.data_grid
+        ncolumn = data.shape[1]
+        nrows = data.shape[0]
+        if external and ncolumn != normalisation_array.size:
+            raise Exception("normalisation array doesn't match data.")
         
-        self._load_data(shuffle=False)
-
         for y in range (ncolumn):
-            column_normalise = normalisation_array[y]
-            
+            if external : column_normalise = normalisation_array[y]
+            else: column_normalise = max(data[:,y])
+
             for x in range(nrows):
-                if self._numpy_data[x,y] == -9999:
-                    continue
-                self._numpy_data[x,y] = self._numpy_data[x,y]/column_normalise
+                if data[x,y] == -9999: continue
+                else: data[x,y] = data[x,y] / column_normalise
+        self._numpy_data = data

@@ -41,8 +41,8 @@
 <dd><p>Bases: <a class="reference internal" href="IData.html#IData.IData" title="IData.IData"><code class="xref py py-class docutils literal notranslate"><span class="pre">IData</span></code></a></p>
 <p>Class for handling Excel data.</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="ExcelData.ExcelData.External_Normalisation">
-<span class="sig-name descname"><span class="pre">External_Normalisation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">normalisation_array</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ExcelData.html#ExcelData.External_Normalisation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ExcelData.ExcelData.External_Normalisation" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="ExcelData.ExcelData.Normalisation">
+<span class="sig-name descname"><span class="pre">Normalisation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">normalisation_array</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ExcelData.html#ExcelData.Normalisation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ExcelData.ExcelData.Normalisation" title="Link to this definition">¶</a></dt>
 <dd><p>Divides all entries in dataframes by the corresponding value
 found in the input array. Skips all entries equal to -9999.
 This method should be used to normalise values before making
@@ -50,7 +50,8 @@ prediction with an already trained array, the normalisation
 should match the one used during training.</p>
 <p>Parameters:</p>
 <p>normalisation_array : numpy array of the values to be used for
-the normalisation</p>
+the normalisation. By default will normalise with the maximum
+value for each column.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -113,7 +114,7 @@ Default is False.</p>
 <li class="toctree-l1"><a class="reference internal" href="IData.html">Data interface</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Excel data class</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#ExcelData.ExcelData"><code class="docutils literal notranslate"><span class="pre">ExcelData</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#ExcelData.ExcelData.External_Normalisation"><code class="docutils literal notranslate"><span class="pre">ExcelData.External_Normalisation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ExcelData.ExcelData.Normalisation"><code class="docutils literal notranslate"><span class="pre">ExcelData.Normalisation()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ExcelData.ExcelData.Save_Normalisation"><code class="docutils literal notranslate"><span class="pre">ExcelData.Save_Normalisation()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ExcelData.ExcelData.Select_column"><code class="docutils literal notranslate"><span class="pre">ExcelData.Select_column()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ExcelData.ExcelData.__init__"><code class="docutils literal notranslate"><span class="pre">ExcelData.__init__()</span></code></a></li>

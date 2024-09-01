@@ -112,7 +112,5 @@ if __name__ == "__main__":
     age = samples.Select_column('AGE_AT_SCAN')
     model = TrainingConsole(my_matrix, age)
     
-    samples = ed.ExcelData(file_path, normalisation = True, shuffle = False)
-
     predicted_ages = model._model.predict(my_matrix)
     print(predicted_ages)

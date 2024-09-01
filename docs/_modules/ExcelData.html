@@ -33,6 +33,7 @@
 <span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">IData</span> <span class="kn">import</span> <span class="n">IData</span>
 
@@ -63,7 +64,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_numpy_data</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1"># numpy array of the data</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_selected_column</span> <span class="o">=</span> <span class="kc">None</span>
         
-        <span class="bp">self</span><span class="o">.</span><span class="n">_removed_columns</span> <span class="o">=</span> <span class="s1">&#39;FILE_ID&#39;</span><span class="p">,</span> <span class="s1">&#39;AGE_AT_SCAN&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_removed_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;FILE_ID&#39;</span><span class="p">,</span> <span class="s1">&#39;AGE_AT_SCAN&#39;</span><span class="p">]</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">_used_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;FILE_ID&#39;</span><span class="p">,</span> <span class="s1">&#39;AGE_AT_SCAN&#39;</span><span class="p">,</span> <span class="s1">&#39;SEX&#39;</span><span class="p">,</span><span class="s1">&#39;FIQ&#39;</span><span class="p">,</span>
                               <span class="s1">&#39;DX_GROUP&#39;</span><span class="p">,</span> <span class="s1">&#39;lh_MeanThickness&#39;</span><span class="p">,</span> 
@@ -72,14 +73,13 @@
                               <span class="s1">&#39;lhCerebralWhiteMatterVol&#39;</span><span class="p">,</span>
                               <span class="s1">&#39;rhCerebralWhiteMatterVol&#39;</span><span class="p">,</span> <span class="s1">&#39;TotalGrayVol&#39;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_load_data</span><span class="p">(</span><span class="n">shuffle</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">normalisation</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalize_columns</span></div>
+        <span class="k">if</span> <span class="n">normalisation</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Normalisation</span><span class="p">()</span></div>
 
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">data_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The data grid extracted from the input .xlsx file (pandas).&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_numpy_data</span>
-
 
     <span class="k">def</span> <span class="nf">_load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shuffle</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -133,17 +133,14 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ncolumn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_numpy_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">nrows</span> <span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_numpy_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">column_min</span><span class="p">,</span> <span class="n">column_max</span> <span class="o">=</span> <span class="mi">0</span>
         
         <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="n">ncolumn</span><span class="p">):</span>
-            <span class="n">column_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_numpy_data</span><span class="p">[:,</span><span class="n">y</span><span class="p">])</span>
-            <span class="n">column_min</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_numpy_data</span><span class="p">[:,</span><span class="n">y</span><span class="p">])</span>
-            <span class="n">column_normalise</span> <span class="o">=</span> <span class="n">column_max</span> <span class="o">-</span> <span class="n">column_min</span>
+            <span class="n">column_normalise</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_numpy_data</span><span class="p">[:,</span><span class="n">y</span><span class="p">])</span>
             
             <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nrows</span><span class="p">):</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_numpy_data</span><span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">9999</span><span class="p">:</span>
                     <span class="k">continue</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_numpy_data</span><span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_numpy_data</span><span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">]</span> <span class="o">/</span> <span class="n">column_max</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_numpy_data</span><span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_numpy_data</span><span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">]</span> <span class="o">/</span> <span class="n">column_normalise</span>
 
     <span class="k">def</span> <span class="nf">_shuffle_rows</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -167,7 +164,7 @@
 
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">normalisation_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_frame</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_removed_columns</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="n">columns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_removed_columns</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
                 <span class="n">normalisation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_frame</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> 
                 <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">normalisation</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span>
@@ -198,37 +195,41 @@
                              <span class="s2">&quot;data frame.&quot;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="ExcelData.External_Normalisation">
-<a class="viewcode-back" href="../ExcelData.html#ExcelData.ExcelData.External_Normalisation">[docs]</a>
-    <span class="k">def</span> <span class="nf">External_Normalisation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">normalisation_array</span><span class="p">):</span>
+<div class="viewcode-block" id="ExcelData.Normalisation">
+<a class="viewcode-back" href="../ExcelData.html#ExcelData.ExcelData.Normalisation">[docs]</a>
+    <span class="k">def</span> <span class="nf">Normalisation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">normalisation_array</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Divides all entries in dataframes by the corresponding value</span>
 <span class="sd">        found in the input array. Skips all entries equal to -9999.</span>
 <span class="sd">        This method should be used to normalise values before making</span>
 <span class="sd">        prediction with an already trained array, the normalisation </span>
-<span class="sd">        should match the one used during training.</span>
-<span class="sd">        </span>
+<span class="sd">        should match the one used during training. </span>
+<span class="sd">                </span>
 <span class="sd">        Parameters:</span>
 <span class="sd">        </span>
 <span class="sd">        normalisation_array : numpy array of the values to be used for</span>
-<span class="sd">        the normalisation</span>
+<span class="sd">        the normalisation. By default will normalise with the maximum</span>
+<span class="sd">        value for each column.</span>
+<span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">ncolumn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_numpy_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">nrows</span> <span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_numpy_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         
-        <span class="k">if</span> <span class="n">ncolumn</span> <span class="o">!=</span> <span class="n">normalisation_array</span><span class="o">.</span><span class="n">size</span><span class="p">:</span> 
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Normalisation array not of the required size &quot;</span><span class="p">,</span>
-                             <span class="s2">&quot;for the data frame.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">normalisation_array</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span> 
+            <span class="n">external</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span> <span class="n">external</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_grid</span>
+        <span class="n">ncolumn</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">nrows</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">external</span> <span class="ow">and</span> <span class="n">ncolumn</span> <span class="o">!=</span> <span class="n">normalisation_array</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;normalisation array doesn&#39;t match data.&quot;</span><span class="p">)</span>
         
-        <span class="bp">self</span><span class="o">.</span><span class="n">_load_data</span><span class="p">(</span><span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-
         <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="n">ncolumn</span><span class="p">):</span>
-            <span class="n">column_normalise</span> <span class="o">=</span> <span class="n">normalisation_array</span><span class="p">[</span><span class="n">y</span><span class="p">]</span>
-            
+            <span class="k">if</span> <span class="n">external</span> <span class="p">:</span> <span class="n">column_normalise</span> <span class="o">=</span> <span class="n">normalisation_array</span><span class="p">[</span><span class="n">y</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span> <span class="n">column_normalise</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span><span class="n">y</span><span class="p">])</span>
+
             <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nrows</span><span class="p">):</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_numpy_data</span><span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">9999</span><span class="p">:</span>
-                    <span class="k">continue</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_numpy_data</span><span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_numpy_data</span><span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">]</span><span class="o">/</span><span class="n">column_normalise</span></div>
+                <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">9999</span><span class="p">:</span> <span class="k">continue</span>
+                <span class="k">else</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">]</span> <span class="o">/</span> <span class="n">column_normalise</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_numpy_data</span> <span class="o">=</span> <span class="n">data</span></div>
 </div>
 
 </pre></div>

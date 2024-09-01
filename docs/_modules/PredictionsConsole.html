@@ -31,9 +31,10 @@
             
   <h1>Source code for PredictionsConsole</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;TF_CPP_MIN_LOG_LEVEL&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;2&#39;</span>
+
 <span class="kn">from</span> <span class="nn">xmlrpc.client</span> <span class="kn">import</span> <span class="n">boolean</span>
 <span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">load_model</span>
-<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;TF_CPP_MIN_LOG_LEVEL&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;2&#39;</span>
 <span class="kn">import</span> <span class="nn">numpy</span> 
 <span class="kn">import</span> <span class="nn">ExcelData</span> <span class="k">as</span> <span class="nn">ed</span>
 <span class="kn">import</span> <span class="nn">RegressionModel</span> <span class="k">as</span> <span class="nn">rm</span>
@@ -57,7 +58,7 @@
 
 
     <span class="k">if</span> <span class="n">skip</span><span class="p">:</span>
-        <span class="n">model_path</span> <span class="o">=</span> <span class="s2">&quot;saves</span><span class="se">\\</span><span class="s2">2024-08-15 20-37-21.keras&quot;</span>
+        <span class="n">model_path</span> <span class="o">=</span> <span class="s2">&quot;saves</span><span class="se">\\</span><span class="s2">2024-09-01 23-22-10.keras&quot;</span>
         <span class="n">nr_path</span> <span class="o">=</span> <span class="s2">&quot;saves</span><span class="se">\\</span><span class="s2">normalisation</span><span class="se">\\</span><span class="s2">2024-08-22 00-22-46.txt&quot;</span>
         <span class="n">pr_path</span> <span class="o">=</span> <span class="s2">&quot;input</span><span class="se">\\</span><span class="s2">FS_features_ABIDE_males_someGlobals.xlsx&quot;</span> 
         <span class="k">return</span> <span class="n">model_path</span><span class="p">,</span> <span class="n">nr_path</span><span class="p">,</span> <span class="n">pr_path</span>
@@ -92,14 +93,14 @@
  
     <span class="n">model_path</span> <span class="p">,</span><span class="n">nr_path</span><span class="p">,</span><span class="n">pr_path</span> <span class="o">=</span> <span class="n">PredictionsConsole</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
     
-    <span class="n">samples</span> <span class="o">=</span> <span class="n">ed</span><span class="o">.</span><span class="n">ExcelData</span><span class="p">(</span><span class="n">pr_path</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-    <span class="n">samples</span><span class="o">.</span><span class="n">External_Normalisation</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">nr_path</span><span class="p">))</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">ed</span><span class="o">.</span><span class="n">ExcelData</span><span class="p">(</span><span class="n">pr_path</span><span class="p">,</span> <span class="n">normalisation</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">shuffle</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="n">samples</span><span class="o">.</span><span class="n">Normalisation</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">nr_path</span><span class="p">))</span>
     <span class="n">my_matrix</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">data_grid</span>
     <span class="n">mlp</span> <span class="o">=</span> <span class="n">load_model</span><span class="p">(</span><span class="n">model_path</span><span class="p">,</span> <span class="nb">compile</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">predicted_ages</span> <span class="o">=</span> <span class="n">mlp</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">my_matrix</span><span class="p">)</span>
 
-    <span class="n">mlp</span> <span class="o">=</span> <span class="n">rm</span><span class="o">.</span><span class="n">RegressionModel</span><span class="p">(</span><span class="n">saved_model_path</span> <span class="o">=</span> <span class="n">model_path</span><span class="p">)</span>
-    <span class="n">predicted_ages</span> <span class="o">=</span> <span class="n">mlp</span><span class="o">.</span><span class="n">Predict</span><span class="p">(</span><span class="n">my_matrix</span><span class="p">)</span>
+    <span class="c1"># mlp = rm.RegressionModel(saved_model_path = model_path)</span>
+    <span class="c1"># predicted_ages = mlp.Predict(my_matrix)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">predicted_ages</span><span class="p">)</span>
 </pre></div>
 

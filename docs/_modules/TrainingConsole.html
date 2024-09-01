@@ -147,8 +147,6 @@
     <span class="n">age</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">Select_column</span><span class="p">(</span><span class="s1">&#39;AGE_AT_SCAN&#39;</span><span class="p">)</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">TrainingConsole</span><span class="p">(</span><span class="n">my_matrix</span><span class="p">,</span> <span class="n">age</span><span class="p">)</span>
     
-    <span class="n">samples</span> <span class="o">=</span> <span class="n">ed</span><span class="o">.</span><span class="n">ExcelData</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">normalisation</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">shuffle</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
-
     <span class="n">predicted_ages</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">my_matrix</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">predicted_ages</span><span class="p">)</span>
 </pre></div>

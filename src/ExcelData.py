@@ -76,7 +76,8 @@ class ExcelData(IData):
     def _remove_column(self, 
                        column_name):
         """
-        Remove a selected column from the data frame.
+        Remove a selected column from the data array. 
+        Does not modify the data frame.
                 
         Parameters:
         

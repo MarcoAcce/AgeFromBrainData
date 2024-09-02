@@ -45,7 +45,10 @@
     
 <div class="viewcode-block" id="ExcelData.__init__">
 <a class="viewcode-back" href="../ExcelData.html#ExcelData.ExcelData.__init__">[docs]</a>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">normalisation</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">shuffle</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                 <span class="n">file_path</span><span class="p">,</span> 
+                 <span class="n">normalisation</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> 
+                 <span class="n">shuffle</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructor for ExcelData class.</span>
 
@@ -81,7 +84,8 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The data grid extracted from the input .xlsx file (pandas).&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_numpy_data</span>
 
-    <span class="k">def</span> <span class="nf">_load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shuffle</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                   <span class="n">shuffle</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load data from the Excel file.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -106,7 +110,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_selected_column</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_frame</span><span class="p">[</span><span class="s1">&#39;AGE_AT_SCAN&#39;</span><span class="p">]</span>\
                                     <span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">copy</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_remove_column</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column_name</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_remove_column</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                       <span class="n">column_name</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove a selected column from the data frame.</span>
 <span class="sd">                </span>
@@ -154,13 +159,15 @@
     <span class="k">def</span> <span class="nf">Save_Normalisation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Exports the max values of the columns used for training to a </span>
-<span class="sd">        .txt file. The values are the normalisation to be used on new data</span>
-<span class="sd">        for the trained model.        </span>
+<span class="sd">        .txt file, in a subdirectory &quot;/saves/&quot; of the current dir. </span>
+<span class="sd">        The values are the normalisation to be used on new data for the </span>
+<span class="sd">        trained model.        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">normalisation_path</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;saves/normalisation/&quot;</span> <span class="o">+</span> 
-                              <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span>
-                                  <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H-%M-%S&quot;</span><span class="p">)</span> <span class="p">)</span> <span class="o">+</span>
-                              <span class="s2">&quot;.txt&quot;</span><span class="p">)</span>
+        <span class="n">normalisation_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">,</span> 
+                                          <span class="sa">r</span><span class="s1">&#39;saves&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;normalisation&#39;</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">normalisation_path</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span>  <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H-%M-%S&quot;</span><span class="p">)</span> <span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.txt&quot;</span>
+        <span class="n">normalisation_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="n">normalisation_path</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>             
 
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">normalisation_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_frame</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
@@ -173,7 +180,8 @@
 
 <div class="viewcode-block" id="ExcelData.Select_column">
 <a class="viewcode-back" href="../ExcelData.html#ExcelData.ExcelData.Select_column">[docs]</a>
-    <span class="k">def</span> <span class="nf">Select_column</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column_name</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">Select_column</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                      <span class="n">column_name</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a selected column from the data frame.</span>
 
@@ -197,7 +205,8 @@
 
 <div class="viewcode-block" id="ExcelData.Normalisation">
 <a class="viewcode-back" href="../ExcelData.html#ExcelData.ExcelData.Normalisation">[docs]</a>
-    <span class="k">def</span> <span class="nf">Normalisation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">normalisation_array</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">Normalisation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                      <span class="n">normalisation_array</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Divides all entries in dataframes by the corresponding value</span>
 <span class="sd">        found in the input array. Skips all entries equal to -9999.</span>

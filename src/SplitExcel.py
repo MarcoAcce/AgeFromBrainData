@@ -1,7 +1,8 @@
 import pandas as pd
-from os import getcwd, path
+from os import getcwd, path, makedirs
 
-def SplitExcel(file_path: str, columnForSplitting: int =0,
+def SplitExcel(file_path: str, 
+               columnForSplitting: int =0,
                output_directory_path: str = None):
     """
     Function to split an .xlsx file into multiple files, grouping together
@@ -31,13 +32,17 @@ def SplitExcel(file_path: str, columnForSplitting: int =0,
     
     if output_directory_path == None:
         output_directory_path = getcwd()
+    #creates a subdirectory "split" of the directory    
+    output_directory_path = path.join(output_directory_path, r'split')
+    makedirs(output_directory_path, exist_ok = True)
+
        
     # Loop through each group and write to separate .xlsx files
     for key, group in grouped:
         group = group.drop(columns=['GroupKey'])
         # Create a new filename based on the value in the first column
         output_file = path.join(
-            output_directory_path, r'split', f"{key}.xlsx" )
+            output_directory_path, f"{key}.xlsx" )
         
         # Save the group to a new .xlsx file, including the column titles
         group.to_excel(output_file, index=False)

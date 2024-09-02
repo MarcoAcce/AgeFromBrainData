@@ -4,7 +4,8 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 import ExcelData as ed
 import RegressionModel as rm
 
-def TrainingConsole(X, y):
+def TrainingConsole(X, 
+                    y):
     """Function providing a command line UI for the model."""
     print("Welcome to the Regression Model Training Console App!")
  

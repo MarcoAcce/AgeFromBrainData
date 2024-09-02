@@ -118,10 +118,11 @@ class ExcelData(IData):
         .txt file. The values are the normalisation to be used on new data
         for the trained model.        
         """
-        normalisation_path = ("saves/normalisation/" + 
-                              str(datetime.now().strftime(
-                                  "%Y-%m-%d %H-%M-%S") ) +
-                              ".txt")
+        normalisation_path = os.path.join(os.getcwd, 
+                                          r'saves', r'normalisation')
+        os.makedirs(normalisation_path, exist_ok= True)
+        name =  str(datetime.now().strftime("%Y-%m-%d %H-%M-%S") ) + ".txt"
+        normalisation_path = os.path.join( normalisation_path + name)                             
 
         with open(normalisation_path, 'w') as file:
             for column in self._data_frame.drop(

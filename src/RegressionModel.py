@@ -16,9 +16,10 @@ class RegressionModel(IRegression):
             
     @property
     def _save_path(self):
-        path= "saves/" 
-        path += str(datetime.now().strftime("%Y-%m-%d %H-%M-%S"))
-        return path    
+        save_path = os.path.join(os.getcwd, r'saves')
+        os.makedirs(save_path, exist_ok= True)
+        save_path += str(datetime.now().strftime("%Y-%m-%d %H-%M-%S"))
+        return save_path    
 
     def __init__(self, saved_model_path: str = None ):
         """

@@ -16,12 +16,10 @@ The result are saved in a plot, shown against the resulting RMS and
 MSE for the complete data set.
 """
 
-if __name__ == '__main__':
-    analysis_directory = join(getcwd(),r'analysis')
-    analysis_input_file = join(
-        analysis_directory, f'model_predictions.xlsx')
+def Analysis (path_input_file: str, analysis_directory: str = None):
+    
     #split the model_predictions 
-    try: se.SplitExcel(analysis_input_file, 0, analysis_directory)
+    try: se.SplitExcel(path_input_file, 0, analysis_directory)
     except Exception as ex: 
         print(ex)
         quit()
@@ -109,3 +107,9 @@ if __name__ == '__main__':
     plt.savefig(analysis_directory + "\\result.png", dpi=500, bbox_inches='tight')
     plt.show()
     
+
+if __name__ == "__main__":
+    analysis_directory = join(getcwd(),r'analysis')
+    path_input_file = join(
+        analysis_directory, f'model_predictions.xlsx')
+    Analysis(path_input_file, analysis_directory)

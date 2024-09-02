@@ -40,13 +40,17 @@
 <div><p>The model is a deep neural network regressor, it expects a numpy array of features (mri data) and an array of labels (ages) for supervised training.
 The RegressionModel class provides methods to define and compile the model, train over data, save and load trained models and make predictions.</p>
 </div></blockquote>
-<dl class="simple">
-<dt>The project provides a ExcelData class to process .xlsx files of features and labels into the array expected by the model.</dt><dd><p>The ExcelData class includes methods to select the labels’ coloumn from the dataframe, to remove unnecessary features, and to normalise and shuffle the data.
+<p>The project provides a ExcelData class to process .xlsx files of features and labels into the array expected by the model.</p>
+<blockquote>
+<div><p>The ExcelData class includes methods to select the labels’ coloumn from the dataframe, to remove unnecessary features, and to normalise and shuffle the data.
 For the bext results the data should be normalised and shuffled before training, all the data for predictions should be normalised in the same way as the training data and not shuffled.</p>
-</dd>
-</dl>
-<p>The project includes two functions for basic UI in the command console: one for model training, TrainingConsole, and one for making predictions with pre-trained model, PredictionsConsole.
+</div></blockquote>
+<p>The project includes two functions for basic UI in the command console</p>
+<blockquote>
+<div><p>TrainingConsole provides an user interface for model training, to select the training data and the model hyperparameters before training.
+PredictionsConsole provides an user interface for making predictions with an already trained model.
 Both of these functions allow the user to skip all input to use default values set in the source code.</p>
+</div></blockquote>
 <p>Finally the project provides some utility scripts to evaluate the model’s predictions and to choose the best hypeparameters.</p>
 </section>
 

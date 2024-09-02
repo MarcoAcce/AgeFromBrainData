@@ -33,7 +33,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="SplitExcel.py" />
+    <Compile Include="testing\testExcelData.py" />
+    <Compile Include="testing\testRegressionModel.py" />
     <Compile Include="TrainingConsole.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="testing\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

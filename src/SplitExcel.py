@@ -1,7 +1,8 @@
 import pandas as pd
 from os import getcwd, path, makedirs
 
-def SplitExcel(file_path: str, columnForSplitting: int =0,
+def SplitExcel(file_path: str, 
+               columnForSplitting: int =0,
                output_directory_path: str = None):
     """
     Function to split an .xlsx file into multiple files, grouping together

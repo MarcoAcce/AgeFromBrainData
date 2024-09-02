@@ -9,7 +9,10 @@ from IData import IData
 class ExcelData(IData):
     """Class for handling Excel data."""
     
-    def __init__(self, file_path, normalisation = False, shuffle = False):
+    def __init__(self, 
+                 file_path, 
+                 normalisation = False, 
+                 shuffle = False):
         """
         Constructor for ExcelData class.
 
@@ -44,7 +47,8 @@ class ExcelData(IData):
         """The data grid extracted from the input .xlsx file (pandas)."""
         return self._numpy_data
 
-    def _load_data(self, shuffle = False):
+    def _load_data(self, 
+                   shuffle = False):
         """
         Load data from the Excel file.
         """
@@ -69,7 +73,8 @@ class ExcelData(IData):
         self._selected_column = self._data_frame['AGE_AT_SCAN']\
                                     .to_numpy(copy = True, dtype=float)
 
-    def _remove_column(self, column_name):
+    def _remove_column(self, 
+                       column_name):
         """
         Remove a selected column from the data frame.
                 
@@ -115,14 +120,15 @@ class ExcelData(IData):
     def Save_Normalisation(self):
         """
         Exports the max values of the columns used for training to a 
-        .txt file. The values are the normalisation to be used on new data
-        for the trained model.        
+        .txt file, in a subdirectory "/saves/" of the current dir. 
+        The values are the normalisation to be used on new data for the 
+        trained model.        
         """
         normalisation_path = os.path.join(os.getcwd, 
                                           r'saves', r'normalisation')
         os.makedirs(normalisation_path, exist_ok= True)
         name =  str(datetime.now().strftime("%Y-%m-%d %H-%M-%S") ) + ".txt"
-        normalisation_path = os.path.join( normalisation_path + name)                             
+        normalisation_path = os.path.join( normalisation_path + name)             
 
         with open(normalisation_path, 'w') as file:
             for column in self._data_frame.drop(
@@ -132,7 +138,8 @@ class ExcelData(IData):
         print(
             f"Normalisation values have been written to {normalisation_path}")
 
-    def Select_column(self, column_name):
+    def Select_column(self, 
+                      column_name):
         """
         Get a selected column from the data frame.
 
@@ -153,7 +160,8 @@ class ExcelData(IData):
             raise ValueError(f"Column '{column_name}' not found in ", 
                              "data frame.")
 
-    def Normalisation(self, normalisation_array = None):
+    def Normalisation(self, 
+                      normalisation_array = None):
         """
         Divides all entries in dataframes by the corresponding value
         found in the input array. Skips all entries equal to -9999.

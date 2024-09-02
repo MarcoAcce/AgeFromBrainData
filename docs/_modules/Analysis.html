@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analysis &#8212; Age From Brain Data 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for Analysis</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">listdir</span><span class="p">,</span> <span class="n">getcwd</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">isfile</span><span class="p">,</span> <span class="n">join</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">import</span> <span class="nn">SplitExcel</span> <span class="k">as</span> <span class="nn">se</span>
+
+
+<div class="viewcode-block" id="Analysis">
+<a class="viewcode-back" href="../Analysis.html#Analysis.Analysis">[docs]</a>
+<span class="k">def</span> <span class="nf">Analysis</span> <span class="p">(</span><span class="n">path_input_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
+              <span class="n">analysis_directory</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function for the data analysis of the predicted ages.</span>
+<span class="sd">    Splits the model predictions for the entire data set on smaller</span>
+<span class="sd">    .xlsx files for each data group, then calculates the RMS and MSE</span>
+<span class="sd">    of the prediction for each group.</span>
+<span class="sd">    The result are saved in a plot, shown against the resulting RMS and</span>
+<span class="sd">    MSE for the complete data set.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters:</span>
+<span class="sd">    </span>
+<span class="sd">    path_input_file (str): path to the .xlsx containing the input data and the</span>
+<span class="sd">    model&#39;s predictions</span>
+<span class="sd">    </span>
+<span class="sd">    analysis_directory (str): path to the directory to be used for the </span>
+<span class="sd">    analysis. Default uses the current directory.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1">#split the model_predictions </span>
+    <span class="k">try</span><span class="p">:</span> <span class="n">se</span><span class="o">.</span><span class="n">SplitExcel</span><span class="p">(</span><span class="n">path_input_file</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">analysis_directory</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span> 
+        <span class="nb">print</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
+        <span class="n">quit</span><span class="p">()</span>
+    <span class="c1">#select all files split from model_predictions</span>
+    <span class="c1">#listdir returns only the files&#39; name and not the paths</span>
+    <span class="c1">#the split removes the file&#39;s extension    </span>
+    <span class="n">analysis_split_directory</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">analysis_directory</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;split&#39;</span><span class="p">)</span>
+    <span class="n">analysis_files_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.xlsx&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> 
+                            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">listdir</span><span class="p">(</span><span class="n">analysis_split_directory</span><span class="p">)</span> 
+                            <span class="k">if</span> <span class="n">isfile</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">analysis_split_directory</span><span class="p">,</span> <span class="n">f</span><span class="p">))]</span>
+    <span class="c1">#creates empty dictionaries for the results </span>
+    <span class="n">rms_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">mse_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">total_mse</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">total_patient_number</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="c1">#iterate through all split files</span>
+    <span class="k">for</span> <span class="n">file_name</span> <span class="ow">in</span> <span class="n">analysis_files_names</span><span class="p">:</span>
+        <span class="c1">#reconstruct the path to each file</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">analysis_split_directory</span><span class="p">,</span> <span class="n">file_name</span> <span class="o">+</span> <span class="s2">&quot;.xlsx&quot;</span><span class="p">)</span>
+        <span class="c1">#reads age and predictions for the file</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">file</span><span class="p">)[[</span><span class="s1">&#39;AGE_AT_SCAN&#39;</span><span class="p">,</span><span class="s1">&#39;PREDICTED_AGE&#39;</span><span class="p">]]</span>
+        <span class="n">ages</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;AGE_AT_SCAN&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">predictions</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;PREDICTED_AGE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="c1">#sanity check for the arrays&#39; dimensions</span>
+        <span class="k">if</span> <span class="n">ages</span><span class="o">.</span><span class="n">size</span> <span class="o">!=</span> <span class="n">predictions</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Ages and predicted ages differ in number!&quot;</span><span class="p">)</span>
+    
+        <span class="c1">#calculate mse and rms for each group and save value to a dictionary</span>
+        <span class="n">mse</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">rms</span> <span class="o">=</span> <span class="mi">0</span>
+    
+        <span class="k">for</span> <span class="n">age</span><span class="p">,</span> <span class="n">prediction</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ages</span><span class="p">,</span><span class="n">predictions</span><span class="p">):</span>
+            <span class="n">square_error</span> <span class="o">=</span> <span class="p">(</span><span class="n">age</span> <span class="o">-</span> <span class="n">prediction</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+            <span class="n">mse</span> <span class="o">+=</span> <span class="n">square_error</span>
+            <span class="n">rms</span> <span class="o">+=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">square_error</span><span class="p">)</span>
+            <span class="n">total_mse</span> <span class="o">+=</span> <span class="n">square_error</span>
+        <span class="n">mse</span> <span class="o">=</span> <span class="n">mse</span> <span class="o">/</span> <span class="n">ages</span><span class="o">.</span><span class="n">size</span>  
+        <span class="n">rms</span> <span class="o">=</span> <span class="n">rms</span> <span class="o">/</span> <span class="n">ages</span><span class="o">.</span><span class="n">size</span>
+        <span class="n">rms_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rms</span><span class="p">)</span>
+        <span class="n">mse_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mse</span><span class="p">)</span>
+        <span class="n">total_patient_number</span> <span class="o">+=</span> <span class="n">ages</span><span class="o">.</span><span class="n">size</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;   rms: &quot;</span><span class="p">,</span> <span class="n">rms</span><span class="p">,</span> <span class="s2">&quot;   mse: &quot;</span><span class="p">,</span> <span class="n">mse</span><span class="p">)</span>
+    
+    <span class="n">total_mse</span> <span class="o">=</span> <span class="n">total_mse</span> <span class="o">/</span> <span class="n">total_patient_number</span>
+    <span class="n">total_rms</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">total_mse</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Complete dataset&quot;</span><span class="p">,</span> <span class="s2">&quot;   rms: &quot;</span><span class="p">,</span> <span class="n">total_rms</span><span class="p">,</span> <span class="s2">&quot;   mse :&quot;</span><span class="p">,</span> <span class="n">total_mse</span><span class="p">)</span>
+    
+    <span class="c1">#create two subplots for mse and rms</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+    <span class="n">rms_plot</span> <span class="o">=</span> <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">mse_plot</span> <span class="o">=</span> <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    
+    <span class="c1">#rms subplot</span>
+    <span class="n">rms_plot</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">analysis_files_names</span><span class="p">,</span><span class="n">rms_list</span><span class="p">)</span>
+    <span class="c1">#array of all the y value for the grid</span>
+    <span class="n">y_rms_ticks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">rms_list</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="c1">#grid</span>
+    <span class="n">rms_plot</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="n">y_rms_ticks</span><span class="p">)</span>  
+    <span class="n">rms_plot</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="c1">#horizontal line at the total value</span>
+    <span class="n">rms_plot</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">total_rms</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> 
+                     <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Complete data RMS: </span><span class="si">{</span><span class="n">total_rms</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">rms_plot</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;Group&#39;</span><span class="p">,</span> <span class="n">ylabel</span> <span class="o">=</span> <span class="s1">&#39;RMS [yr]&#39;</span><span class="p">)</span>
+    <span class="c1">#legend</span>
+    <span class="n">rms_plot</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    
+    <span class="c1">#mse subplot</span>
+    <span class="n">mse_plot</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">analysis_files_names</span><span class="p">,</span><span class="n">mse_list</span><span class="p">)</span>
+    <span class="c1">#array of all the y value for the grid</span>
+    <span class="n">y_mse_ticks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">mse_list</span><span class="p">)</span> <span class="o">+</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+    <span class="c1">#grid</span>
+    <span class="n">mse_plot</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="n">y_mse_ticks</span><span class="p">)</span>     
+    <span class="n">mse_plot</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="c1">#horizontal line at the total value</span>
+    <span class="n">mse_plot</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">total_mse</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> 
+                     <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Complete data MSE: </span><span class="si">{</span><span class="n">total_mse</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">mse_plot</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;Group&#39;</span><span class="p">,</span> <span class="n">ylabel</span> <span class="o">=</span> <span class="s1">&#39;MSE&#39;</span><span class="p">)</span>
+    <span class="c1">#legend</span>
+    <span class="n">mse_plot</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    
+    <span class="c1">#group name labels rotation</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+    <span class="c1">#save plot as result.png</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">analysis_directory</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">result.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+    
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">analysis_directory</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">getcwd</span><span class="p">(),</span><span class="sa">r</span><span class="s1">&#39;analysis&#39;</span><span class="p">)</span>
+    <span class="n">path_input_file</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span>
+        <span class="n">analysis_directory</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;model_predictions.xlsx&#39;</span><span class="p">)</span>
+    <span class="n">Analysis</span><span class="p">(</span><span class="n">path_input_file</span><span class="p">,</span> <span class="n">analysis_directory</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Age From Brain Data</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../IData.html">Data interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ExcelData.html">Excel data class</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../IRegression.html">Regression model interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../RegressionModel.html">Regression model class</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../TrainingConsole.html">Training user interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PredictionsConsole.html">Predictions user interface</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Optimizator.html">Optimizator script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../SplitExcel.html">SplitExcel script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Analysis.html">Analysis script</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Marco Accerenzi.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

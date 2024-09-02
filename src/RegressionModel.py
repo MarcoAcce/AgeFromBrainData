@@ -21,7 +21,8 @@ class RegressionModel(IRegression):
         save_path += str(datetime.now().strftime("%Y-%m-%d %H-%M-%S"))
         return save_path    
 
-    def __init__(self, saved_model_path: str = None ):
+    def __init__(self, 
+                 saved_model_path: str = None ):
         """
         Constructor for RegressionModel class.
         Can be used to either define a new model for training or for 
@@ -40,7 +41,9 @@ class RegressionModel(IRegression):
 
        
 
-    def Compile_Model(self,shape, hidden_layers: int = None, 
+    def Compile_Model(self,
+                      shape, 
+                      hidden_layers: int = None, 
                       nodes_per_layer: int = None):
         """
         Define the architecture of the regression model.
@@ -72,8 +75,12 @@ class RegressionModel(IRegression):
         self._model.compile( loss = "mean_squared_error", optimizer='adam') 
 
 
-    def Start_Training(self, X, y, save_checkpoint_path: str = None, 
-                       validation_split: float = 0.75, epochs: int = 10000, 
+    def Start_Training(self, 
+                       X, 
+                       y, 
+                       save_checkpoint_path: str = None, 
+                       validation_split: float = 0.75, 
+                       epochs: int = 10000, 
                        stopping_patience: int = 1000, 
                        verbose_training: int = 1):
         """
@@ -161,7 +168,9 @@ class RegressionModel(IRegression):
         return self._model.predict(X)
     
     
-    def _define_callbacks(self, stopping_patience, verbose_training, 
+    def _define_callbacks(self, 
+                          stopping_patience, 
+                          verbose_training, 
                           save_checkpoint_path):
         """
         Defines all callbacks for training.
@@ -206,7 +215,8 @@ class RegressionModel(IRegression):
                                              save_weights_only = True)
         self._callbacks.append(checkpoint)
     
-    def _load_model(self,saved_model_path):
+    def _load_model(self,
+                    saved_model_path):
         """
         Constructor for RegressionModel class, to be used to load
         an already trained model.

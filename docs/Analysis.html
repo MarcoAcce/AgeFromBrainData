@@ -33,6 +33,22 @@
             
   <section id="module-Analysis">
 <span id="analysis-script"></span><h1>Analysis script<a class="headerlink" href="#module-Analysis" title="Link to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="Analysis.Analysis">
+<span class="sig-prename descclassname"><span class="pre">Analysis.</span></span><span class="sig-name descname"><span class="pre">Analysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_input_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">analysis_directory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Analysis.html#Analysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Analysis.Analysis" title="Link to this definition">¶</a></dt>
+<dd><p>Function for the data analysis of the predicted ages.
+Splits the model predictions for the entire data set on smaller
+.xlsx files for each data group, then calculates the RMS and MSE
+of the prediction for each group.
+The result are saved in a plot, shown against the resulting RMS and
+MSE for the complete data set.</p>
+<p>Parameters:</p>
+<p>path_input_file (str): path to the .xlsx containing the input data and the
+model’s predictions</p>
+<p>analysis_directory (str): path to the directory to be used for the
+analysis. Default uses the current directory.</p>
+</dd></dl>
+
 </section>
 
 
@@ -67,7 +83,10 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Optimizator.html">Optimizator script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="SplitExcel.html">SplitExcel script</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Analysis script</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Analysis script</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Analysis.Analysis"><code class="docutils literal notranslate"><span class="pre">Analysis()</span></code></a></li>
+</ul>
+</li>
 </ul>
 
 <div class="relations">

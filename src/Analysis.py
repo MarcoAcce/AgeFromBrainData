@@ -7,17 +7,25 @@ import pandas as pd
 
 import SplitExcel as se
 
-"""
-"Script for the data analysis of the predicted ages.
-Splits the model predictions for the entire data set on smaller
-.xlsx files for each data group, then calculates the RMS and MSE
-of the prediction for each group.
-The result are saved in a plot, shown against the resulting RMS and
-MSE for the complete data set.
-"""
 
-def Analysis (path_input_file: str, analysis_directory: str = None):
+def Analysis (path_input_file: str, 
+              analysis_directory: str = None):
+    """
+    Function for the data analysis of the predicted ages.
+    Splits the model predictions for the entire data set on smaller
+    .xlsx files for each data group, then calculates the RMS and MSE
+    of the prediction for each group.
+    The result are saved in a plot, shown against the resulting RMS and
+    MSE for the complete data set.
     
+    Parameters:
+    
+    path_input_file (str): path to the .xlsx containing the input data and the
+    model's predictions
+    
+    analysis_directory (str): path to the directory to be used for the 
+    analysis. Default uses the current directory.
+    """
     #split the model_predictions 
     try: se.SplitExcel(path_input_file, 0, analysis_directory)
     except Exception as ex: 

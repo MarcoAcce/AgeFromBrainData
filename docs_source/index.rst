@@ -6,6 +6,11 @@
 Welcome to AgeFromBrainData's documentation!
 ============================================
 
+How does it work
+================
+.. toctree::
+   HowToUse
+
 Data handling
 =============
 .. toctree::

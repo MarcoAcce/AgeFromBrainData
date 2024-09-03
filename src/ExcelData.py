@@ -83,33 +83,17 @@ class ExcelData(IData):
         
         column_name (str): Name of the column to select.
         """
+        to_remove = self._removed_columns
+        to_remove.append(column_name)
         if column_name in self._data_frame.columns:
-            
             self._numpy_data = self._data_frame.drop(
-                columns=[self._removed_columns, column_name])\
+                columns=to_remove)\
                .to_numpy(copy = False, na_value=-9999, dtype=float)
-            
-            self._removed_columns.__add__(column_name)
-        
+            self._removed_columns.append(column_name)
         else:
             raise ValueError(f"Column '{column_name}' not found",
                              "in data frame.")
-    
-    def _normalize_columns(self):
-        """
-        Divides all entries in dataframes by their column's max value before
-        filling the array. Skips all entries equal to -9999.
-        """
-        ncolumn = self._numpy_data.shape[1]
-        nrows =self._numpy_data.shape[0]
-        
-        for y in range (ncolumn):
-            column_normalise = max(self._numpy_data[:,y])
-            
-            for x in range(nrows):
-                if self._numpy_data[x,y] == -9999:
-                    continue
-                self._numpy_data[x,y] = self._numpy_data[x,y] / column_normalise
+
 
     def _shuffle_rows(self):
         """
@@ -125,12 +109,12 @@ class ExcelData(IData):
         The values are the normalisation to be used on new data for the 
         trained model.        
         """
-        normalisation_path = os.path.join(os.getcwd, 
+        normalisation_path = os.path.join(os.getcwd(), 
                                           r'saves', r'normalisation')
         os.makedirs(normalisation_path, exist_ok= True)
         name =  str(datetime.now().strftime("%Y-%m-%d %H-%M-%S") ) + ".txt"
         normalisation_path = os.path.join( normalisation_path + name)             
-
+        #write the normalising value to .txt for later use
         with open(normalisation_path, 'w') as file:
             for column in self._data_frame.drop(
                 columns = self._removed_columns).columns:
@@ -177,16 +161,20 @@ class ExcelData(IData):
         value for each column.
         
         """
-        
+        #checks for an array for external normalisation
         if isinstance(normalisation_array, np.ndarray): 
             external = True
         else: external = False
         data = self.data_grid
+        #finds the dimension of the data matrix
         ncolumn = data.shape[1]
         nrows = data.shape[0]
+        #checks if the the external normalisation is appropriate for
+        #the size of the matrix
         if external and ncolumn != normalisation_array.size:
             raise Exception("normalisation array doesn't match data.")
-        
+        #normalises the matrix using external or the max value 
+        #for each column. Ignores all -9999 cells.
         for y in range (ncolumn):
             if external : column_normalise = normalisation_array[y]
             else: column_normalise = max(data[:,y])

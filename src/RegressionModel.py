@@ -13,14 +13,6 @@ class RegressionModel(IRegression):
     """
     Class for training and plotting history of a regression model using MLP.
     """
-            
-    @property
-    def _save_path(self):
-        save_path = os.path.join(os.getcwd, r'saves')
-        os.makedirs(save_path, exist_ok= True)
-        save_path += str(datetime.now().strftime("%Y-%m-%d %H-%M-%S"))
-        return save_path    
-
     def __init__(self, 
                  saved_model_path: str = None ):
         """
@@ -167,6 +159,18 @@ class RegressionModel(IRegression):
     def Predict(self, X):
         return self._model.predict(X)
     
+                
+    @property
+    def _save_path(self):
+        """
+        Property containg the general name for all saved files.
+        Will create a save directory the first time its called.
+        """
+        save_path = os.path.join(os.getcwd(), r'saves')
+        os.makedirs(save_path, exist_ok= True)
+        save_path += str(datetime.now().strftime("%Y-%m-%d %H-%M-%S"))
+        return save_path    
+
     
     def _define_callbacks(self, 
                           stopping_patience, 

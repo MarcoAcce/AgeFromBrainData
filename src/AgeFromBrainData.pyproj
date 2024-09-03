@@ -35,6 +35,8 @@
     <Compile Include="SplitExcel.py" />
     <Compile Include="testing\testExcelData.py" />
     <Compile Include="testing\testRegressionModel.py" />
+    <Compile Include="testing\unittestExcelData.py" />
+    <Compile Include="testing\unittestRegressionModel.py" />
     <Compile Include="TrainingConsole.py" />
   </ItemGroup>
   <ItemGroup>

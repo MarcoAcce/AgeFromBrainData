@@ -120,33 +120,17 @@
 <span class="sd">        </span>
 <span class="sd">        column_name (str): Name of the column to select.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">to_remove</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_removed_columns</span>
+        <span class="n">to_remove</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">column_name</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">column_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_frame</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-            
             <span class="bp">self</span><span class="o">.</span><span class="n">_numpy_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_frame</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
-                <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_removed_columns</span><span class="p">,</span> <span class="n">column_name</span><span class="p">])</span>\
+                <span class="n">columns</span><span class="o">=</span><span class="n">to_remove</span><span class="p">)</span>\
                <span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">copy</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">na_value</span><span class="o">=-</span><span class="mi">9999</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-            
-            <span class="bp">self</span><span class="o">.</span><span class="n">_removed_columns</span><span class="o">.</span><span class="fm">__add__</span><span class="p">(</span><span class="n">column_name</span><span class="p">)</span>
-        
+            <span class="bp">self</span><span class="o">.</span><span class="n">_removed_columns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">column_name</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Column &#39;</span><span class="si">{</span><span class="n">column_name</span><span class="si">}</span><span class="s2">&#39; not found&quot;</span><span class="p">,</span>
                              <span class="s2">&quot;in data frame.&quot;</span><span class="p">)</span>
-    
-    <span class="k">def</span> <span class="nf">_normalize_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Divides all entries in dataframes by their column&#39;s max value before</span>
-<span class="sd">        filling the array. Skips all entries equal to -9999.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">ncolumn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_numpy_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">nrows</span> <span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_numpy_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        
-        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="n">ncolumn</span><span class="p">):</span>
-            <span class="n">column_normalise</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_numpy_data</span><span class="p">[:,</span><span class="n">y</span><span class="p">])</span>
-            
-            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nrows</span><span class="p">):</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_numpy_data</span><span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">9999</span><span class="p">:</span>
-                    <span class="k">continue</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_numpy_data</span><span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_numpy_data</span><span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">]</span> <span class="o">/</span> <span class="n">column_normalise</span>
+
 
     <span class="k">def</span> <span class="nf">_shuffle_rows</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -164,12 +148,12 @@
 <span class="sd">        The values are the normalisation to be used on new data for the </span>
 <span class="sd">        trained model.        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">normalisation_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">,</span> 
+        <span class="n">normalisation_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> 
                                           <span class="sa">r</span><span class="s1">&#39;saves&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;normalisation&#39;</span><span class="p">)</span>
         <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">normalisation_path</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
         <span class="n">name</span> <span class="o">=</span>  <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H-%M-%S&quot;</span><span class="p">)</span> <span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.txt&quot;</span>
         <span class="n">normalisation_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="n">normalisation_path</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>             
-
+        <span class="c1">#write the normalising value to .txt for later use</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">normalisation_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_frame</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
                 <span class="n">columns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_removed_columns</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
@@ -222,16 +206,20 @@
 <span class="sd">        value for each column.</span>
 <span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        
+        <span class="c1">#checks for an array for external normalisation</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">normalisation_array</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span> 
             <span class="n">external</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span> <span class="n">external</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_grid</span>
+        <span class="c1">#finds the dimension of the data matrix</span>
         <span class="n">ncolumn</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">nrows</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1">#checks if the the external normalisation is appropriate for</span>
+        <span class="c1">#the size of the matrix</span>
         <span class="k">if</span> <span class="n">external</span> <span class="ow">and</span> <span class="n">ncolumn</span> <span class="o">!=</span> <span class="n">normalisation_array</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;normalisation array doesn&#39;t match data.&quot;</span><span class="p">)</span>
-        
+        <span class="c1">#normalises the matrix using external or the max value </span>
+        <span class="c1">#for each column. Ignores all -9999 cells.</span>
         <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="n">ncolumn</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">external</span> <span class="p">:</span> <span class="n">column_normalise</span> <span class="o">=</span> <span class="n">normalisation_array</span><span class="p">[</span><span class="n">y</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span> <span class="n">column_normalise</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span><span class="n">y</span><span class="p">])</span>
@@ -260,6 +248,9 @@
 
 
 <h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../HowToUse.html">How to use this code</a></li>
+</ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../IData.html">Data interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ExcelData.html">Excel data class</a></li>

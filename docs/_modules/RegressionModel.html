@@ -47,14 +47,6 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class for training and plotting history of a regression model using MLP.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-            
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">_save_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">save_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;saves&#39;</span><span class="p">)</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="n">save_path</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H-%M-%S&quot;</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">save_path</span>    
-
 <div class="viewcode-block" id="RegressionModel.__init__">
 <a class="viewcode-back" href="../RegressionModel.html#RegressionModel.RegressionModel.__init__">[docs]</a>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
@@ -213,6 +205,18 @@
     <span class="k">def</span> <span class="nf">Predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
     
+                
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_save_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Property containg the general name for all saved files.</span>
+<span class="sd">        Will create a save directory the first time its called.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">save_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="sa">r</span><span class="s1">&#39;saves&#39;</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">save_path</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H-%M-%S&quot;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">save_path</span>    
+
     
     <span class="k">def</span> <span class="nf">_define_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
                           <span class="n">stopping_patience</span><span class="p">,</span> 
@@ -296,6 +300,9 @@
 
 
 <h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../HowToUse.html">How to use this code</a></li>
+</ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../IData.html">Data interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ExcelData.html">Excel data class</a></li>

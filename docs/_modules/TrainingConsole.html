@@ -142,7 +142,7 @@
     <span class="n">_</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;cls&#39;</span><span class="p">)</span>
     <span class="n">current_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
     <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-        <span class="n">current_directory</span><span class="p">,</span><span class="sa">r</span><span class="s1">&#39;input\FS_features_ABIDE_males_someGlobals.xlsx&#39;</span><span class="p">)</span>
+        <span class="n">current_directory</span><span class="p">,</span><span class="sa">r</span><span class="s1">&#39;input\FS_features_ABIDE_males_noOutliers.xlsx&#39;</span><span class="p">)</span>
     <span class="n">samples</span> <span class="o">=</span> <span class="n">ed</span><span class="o">.</span><span class="n">ExcelData</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
     <span class="n">my_matrix</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">data_grid</span>
     <span class="n">age</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">Select_column</span><span class="p">(</span><span class="s1">&#39;AGE_AT_SCAN&#39;</span><span class="p">)</span>

@@ -53,187 +53,225 @@
     \end{frame}
 }
 
-% First Slide
-\section{Introduction}
-\begin{frame}{Introduction to the project}
-	The objective of this project was to develop a deep learning regression model, trained to predict the brain age of patients from data extracted from MRI scan of their brains. 
+% First Slide--------------------------------------------------------------------------------------------------------------------------------------
 
-The model implemented in the project is capable of predicting the age of the patients in the data set with a RMS of about 6 years.
+\section{Introduzione}
+\begin{frame}{Introduzione al progetto}
+	L'obiettivo di questo progetto era sviluppare un modello di regressione di deep learning, addestrato per predire l'età cerebrale dei pazienti dai dati estratti dalla risonanza magnetica (MRI) dei loro cervelli.
 
-The best performing configuration for the model was a 2-hidden layer deep learning model, with 6 nodes per layer. The model trains and predicts at its best when the data is standardized and normalised using the methods provided in the project.
+Il modello implementato nel progetto è in grado di predire l'età dei pazienti nel set di dati con un errore quadratico medio (RMS) di circa 6 anni.
+
+La configurazione migliore per il modello è stata un modello di deep learning con 2 hidden layers e 6 nodes per strato. Il modello si addestra e predice al meglio quando i dati sono standardizzati e normalizzati utilizzando i metodi forniti nel progetto.
 
 \end{frame}
 
+% Second Slide----------------------------------------------------------------------------------------------------------------------------------------------------
 
-
-% Second Slide
-\subsection{Libraries}
-\begin{frame}{Libraries}
+\subsection{Librerie}
+\begin{frame}{Librerie}
     \begin{itemize}
-		\item I used the \emph{keras} library for the regression model to write a problem specific implementation.     
-		\item To read and manipulate the brain data, provided in .xlsx files, I used \emph{pandas}.
-        \item For plotting the results and visualizations I used matplotlib.
-        \item I used the \emph{os} and \emph{sys} modules from the python standard library to get and manipulate paths and directories.
+		\item Ho utilizzato la libreria \emph{keras} per il modello di regressione per scrivere un'implementazione specifica per il problema.
+\pause
+		\item Per leggere e manipolare i dati cerebrali, forniti in file .xlsx, ho usato \emph{pandas}.
+\pause
+        \item Per tracciare i risultati e le visualizzazioni ho utilizzato \emph{matplotlib}.
+\pause
+        \item Ho usato i moduli \emph{os} e \emph{sys} dalla libreria standard di Python per ottenere e manipolare percorsi e directory.
     \end{itemize}
 \end{frame}
 
-% Third Slide
-\subsection{What's in the code}
-\begin{frame}{What's in the code}
-The source code for this program contains several classes and some scripts, as to provide a framework to use the input MRI data from the ``raw'' excel file to produce a trained model capable of making predictions, evaluating and visualizing those predictions.
+% Third Slide----------------------------------------------------------------------------------------------------------------------------------------------------
+
+\subsection{Cosa c'è nel codice}
+\begin{frame}{Cosa c'è nel codice}
+Il codice sorgente di questo programma contiene diverse classi e alcuni script, al fine di fornire un framework per utilizzare i dati MRI in input dal file excel ``raw'' per produrre un modello addestrato in grado di fare previsioni, valutare e visualizzare tali previsioni.
+\pause
     \begin{itemize}
-		\item The ExcelData class is responsible for reading the excel file and providing suitable input for the model.  
-		\item The RegressionModel class contains the model itself. It implements methods for compiling, training, saving and loading regression models.
-        \item The two ``Console'' scripts provide a basic UI to simplify the use of the project, allow the user to train a model and use it to make predictions without changing or writing any code.
+		\item La classe ExcelData è responsabile della lettura del file excel e fornisce input adeguati per il modello.
+\pause
+		\item La classe RegressionModel contiene il modello stesso. Implementa metodi per compilare, addestrare, salvare e caricare modelli di regressione.
+\pause
+        \item I due script ``Console'' forniscono un'interfaccia utente di base per semplificare l'uso del progetto, permettendo all'utente di addestrare un modello e usarlo per fare previsioni senza modificare o scrivere codice.
     \end{itemize}
 \end{frame}
 
-% Third Slide
-\begin{frame}{What's in the code 2}
+
+% Fourth Slide----------------------------------------------------------------------------------------------------------------------------------------------------
+
+\begin{frame}{Cosa c'è nel codice 2}
     \begin{itemize}
-        \item The Optimizator script allows to quickly choose values for the models hyper parameters.
-		\item The Analysis script takes a .xlsx file containing the real labels and the predicted values to calculate the RMS and MSE of the predictions. It also allows to compare the data from the different groups in the original data set.
+        \item Lo script Optimizator permette di scegliere rapidamente i valori per gli iperparametri del modello.
+\pause
+		\item Lo script Analysis prende un file .xlsx contenente le etichette reali e i valori predetti per calcolare l'RMS e l'MSE delle previsioni. Consente inoltre di confrontare i dati dei diversi gruppi nel set di dati originale.
     \end{itemize}
 \end{frame}
 
-% Fourth Slide
-\section{Data extraction and manipulations}
-\subsection*{Data extraction}
-\begin{frame}{Data extraction}
-The MRI scan data for model training was provided for this project in the form of two .xlsx files, containing the features of 915 patients (or samples). For each sample the file also contains the real age at scan value (label) and the name of the group who provided the data for the sample (group name).
+
+% Fifth Slide ----------------------------------------------------------------------------------------------------------------------------------------------------
+
+\section{Estrazione e manipolazioni dei dati}
+\subsection*{Estrazione dei dati}
+\begin{frame}{Estrazione dei dati}
+I dati della risonanza magnetica per l'addestramento del modello sono stati forniti per questo progetto sotto forma di due file .xlsx, contenenti le caratteristiche di 915 pazienti (o campioni). Per ogni campione, il file contiene anche il valore reale dell'età al momento della scansione (etichetta) e il nome del gruppo che ha fornito i dati per il campione (nome del gruppo).
+\pause
 \begin{itemize}
-\item Using the \emph{ read\_exce l} function provided by the\emph{Pandas} library the class creates a dataframe representing the data in the input file, including  the column labels. 
-
-\item The \emph{ to\_numpy} method of the dataframe is then used to extract the numerical data to feed the model and is kept as a property of the ExcelData instace
+\item Utilizzando la funzione \emph{read\_excel} fornita dalla libreria \emph{Pandas}, la classe crea un dataframe che rappresenta i dati nel file di input, comprese le etichette delle colonne.
+\pause
+\item Il metodo \emph{to\_numpy} del dataframe viene poi utilizzato per estrarre i dati numerici da fornire al modello e viene mantenuto come proprietà dell'istanza ExcelData.
 \end{itemize}
-All manipulations to the data is performed on copies of the \emph{numpy} array.
+\pause
+Tutte le manipolazioni sui dati vengono eseguite su copie dell'array \emph{numpy}.
 
-The samples can be shuffled before training to prevent overfitting, allowing to produce genuine predictions on the same test+validation data used in training.
+I campioni possono essere mescolati prima dell'addestramento per prevenire l'overfitting, consentendo di produrre previsioni genuine sugli stessi dati di test e validazione utilizzati nell'addestramento.
 \end{frame}
 
-% Fourth Slide
-\subsection{Data manipulations}
-\begin{frame}{Data manipulations}
 
-The ``raw'' data contains several blank cells and the various features have very different value ranges. To combat this issue the data is standardized and normalized. 
+% Sixth Slide----------------------------------------------------------------------------------------------------------------------------------------------------
 
+\subsection{Manipolazione dei dati}
+\begin{frame}{Manipolazione dei dati}
+
+I dati "grezzi" contengono diverse celle vuote e le varie caratteristiche hanno intervalli di valori molto differenti. Per affrontare questo problema, i dati vengono standardizzati e normalizzati.
+\pause
 \begin{itemize}
-\item As the excel file is read each blank cell is filled with a -9999 value. 
-\item All columns of the array are normalized: each cell is divided by the max value of each column. In this calculation the cell containing a value of -9999 are excluded. 
-\item The model will train itself to ignore the -9999 values. This allows the use of a larger data set compared to the one obtained by deleting all samples with a missing feature.
-\item Normalisation and standardization greatly reduce the time needed for training. Instances of the model trained with normalized data make on average more accurate predictions on the data than instances trained without normalisation.
+\item Durante la lettura del file excel, ogni cella vuota viene riempita con il valore -9999.
+\pause
+\item Tutte le colonne dell'array vengono normalizzate: ogni cella viene divisa per il valore massimo di ciascuna colonna. In questo calcolo, le celle contenenti il valore -9999 vengono escluse.
+\pause
+\item Il modello si allenerà per ignorare i valori -9999. Questo consente di utilizzare un set di dati più ampio rispetto a quello ottenuto eliminando tutti i campioni con una caratteristica mancante.
+\pause
+\item La normalizzazione e la standardizzazione riducono notevolmente il tempo necessario per l'addestramento. Le istanze del modello addestrate con dati normalizzati fanno previsioni mediamente più accurate sui dati rispetto a quelle addestrate senza normalizzazione.
 \end{itemize}
 
 \end{frame}
 
-% Fifth Slide 
-\subsection{The effect of normalisation}
-\begin{frame}{The effect of normalisation 1}
+
+% Seventh Slide ----------------------------------------------------------------------------------------------------------------------------------------------------
+
+\subsection{L'effetto della normalizzazione}
+\begin{frame}{L'effetto della normalizzazione 1}
 \centering
 \begin{minipage}{0.48\textwidth}
 	\includegraphics[width=\textwidth]{Figure_2.png}
-	\captionof{figure}{Plot of the first training epochs using normalised data.}
+	\captionof{figure}{Grafico delle prime epoche di addestramento utilizzando dati normalizzati.}
 	\label{historyNormalised}
 \end{minipage}
 \begin{minipage}{0.48\textwidth}
 	\includegraphics[width=\textwidth]{History_subplot_1.png}
-	\captionof{figure}{Plot of the first training epochs using raw data.}
+	\captionof{figure}{Grafico delle prime epoche di addestramento utilizzando dati grezzi.}
 	\label{historyNonNormalised}
 \end{minipage}
 
 \end{frame}
 
-% Sixth Slide 
-\begin{frame}{The effect of normalisation 2}
+
+% Eighth Slide ----------------------------------------------------------------------------------------------------------------------------------------------------
+
+\begin{frame}{L'effetto della normalizzazione 2}
 \centering
 \begin{minipage}{0.48\textwidth}
 	\includegraphics[width=\textwidth]{Figure_4.png}
-	\captionof{figure}{Plot of the last training epochs using normalised data.}
+	\captionof{figure}{Grafico delle ultime epoche di addestramento utilizzando dati normalizzati.}
 	\label{historyNormalised2}
 \end{minipage}
 \begin{minipage}{0.48\textwidth}
 	\includegraphics[width=\textwidth]{History_subplot_3.png}
-	\captionof{figure}{Plot of the last training epochs using raw data.}
+	\captionof{figure}{Grafico delle ultime epoche di addestramento utilizzando dati grezzi.}
 	\label{historyNonNormalised2}
 \end{minipage}
 
 \end{frame}
 
-% Seventh Slide
-\section{The regression model}
-\begin{frame}{The regression model}
-The regression model class uses the \emph{models}, \emph{layers} and \emph{callbacks} module from the \emph{keras} library.
-It implements several methods:
 
+% Ninth Slide ----------------------------------------------------------------------------------------------------------------------------------------------------
+
+\section{Il regression model}
+\begin{frame}{Il regression model}
+La classe del modello di regressione utilizza i moduli \emph{models}, \emph{layers} e \emph{callbacks} della libreria \emph{keras}.
+Implementa diversi metodi:
+\pause
 \begin{itemize}
-\item The Compile\_Model method defines the instance of the model, it sets up the layers and nodes of the model and fixes the shape of the input data. After the Compile\_Model method is called the model is compiled and ready for training.
-\item The Start\_Training method trains the model over some data, using the supervised training algorithm provided by the \emph{keras} library. The number of epochs and other parameters of the training can be inputted by the user.
-\item The Plot\_History and Save\_Model are meant to be used after Start\_Training, to save the training history and the model itself.
-\item When initializing an instance of the model it's possible to use the \emph{load\_model} function to load a trained model: this model can be used only for inference and not for further training.
+\item Il metodo Compile\_Model definisce l'istanza del modello, imposta i livelli e i nodi del modello e stabilisce la forma dei dati di input. Dopo la chiamata del metodo Compile\_Model, il modello viene compilato ed è pronto per l'addestramento.
+\pause
+\item Il metodo Start\_Training allena il modello su alcuni dati, utilizzando l'algoritmo di apprendimento supervisionato fornito dalla libreria \emph{keras}. Il numero di epoche e altri parametri dell'addestramento possono essere forniti dall'utente.
+\pause
+\item I metodi Plot\_History e Save\_Model sono pensati per essere utilizzati dopo Start\_Training, per salvare la cronologia dell'addestramento e il modello stesso.
+\pause
+\item Durante l'inizializzazione di un'istanza del modello è possibile utilizzare la funzione \emph{load\_model} per caricare un modello già addestrato: questo modello può essere utilizzato solo per l'inferenza e non per ulteriori addestramenti.
 \end{itemize}
 
 \end{frame}
 
-% Eighth slide
+% Tenth slide ----------------------------------------------------------------------------------------------------------------------------------------------------
+
 \subsection{Callbacks}
 \begin{frame}{Callbacks}
-To optimize the training phase several callbacks are used:
+Per ottimizzare la fase di addestramento vengono utilizzati diversi callback:
+\pause
     \begin{itemize}
         \item Early stopping:
-			This callback stops training if, after a user-set number of subsequent epochs, the loss functions hasn't diminished. It allows to stop training before overfitting. After stopping it restores the best performing weights.
-        \item ModelCheckpoint:
-				This callback saves various ``checkpoints'' during training. It allows to keep a backup of the training progress.
-        \item ReduceLROnPlateau:
-				This callback reduces the \emph{learning rate} of the model if the training reaches a plateau (meaning if for a certain number of epochs the loss function stops diminishing). It reduces the amount by which the model's weights are changed during training, allowing for further training after reaching plateaus.
-			\item PrintProgress:
-				This is a modified version of Callback from the \emph{keras} library. It prints the loss functions every n epochs. The n parameter is set by the user through a ``verbose\_training'' parameter of the Start\_Training method.
+			Questo callback interrompe l'addestramento se, dopo un numero di epoche successive impostato dall'utente, la funzione di perdita non è diminuita. Permette di fermare l'addestramento prima di incorrere in overfitting. Dopo l'interruzione, ripristina i pesi con le migliori prestazioni.
+\pause        
+\item ModelCheckpoint:
+				Questo callback salva vari ``checkpoint'' durante l'addestramento. Permette di mantenere un backup del progresso dell'addestramento.
+\pause        
+\item ReduceLROnPlateau:
+				Questo callback riduce il \emph{learning rate} del modello se l'addestramento raggiunge un plateau (significa se per un certo numero di epoche la funzione di perdita smette di diminuire). Riduce la quantità con cui i pesi del modello vengono cambiati durante l'addestramento, permettendo un ulteriore addestramento dopo aver raggiunto i plateaux.
+\pause			
+\item PrintProgress:
+				Questa è una versione modificata di Callback della libreria \emph{keras}. Stampa le funzioni di perdita ogni n epoche. Il parametro n è impostato dall'utente attraverso un parametro ``verbose\_training'' del metodo Start\_Training.
     \end{itemize}
 \end{frame}
 
-% Ninth slide
-\subsection{Optimizing the hyperparameters}
-\begin{frame}{Optimizing the hyperparameters}
-	The Optimizator.py script was used to choose the hyperparameters.
 
-	It loops through several ``reasonable'' values of the hyperparameters and performs a shorter training run, the training history can then be evaluated by the user to choose the hyperparameters or to refine the Optimazator's range of parameters.
+% Eleventh slide ----------------------------------------------------------------------------------------------------------------------------------------------------
 
-	The best performing model for this project was a 2-hidden layer model with 6 nodes per layer. This configuration had the fastest training time and overall the best average prediction performance.
+\subsection{Ottimizzazione degli iperparametri}
+\begin{frame}{Ottimizzazione degli iperparametri}
+	Il script Optimizator.py è stato utilizzato per scegliere gli iperparametri.
 
-\end{frame}
-
-% Tenth slide
-\section{Results and conclusion}
-\begin{frame}{Predictions}
-
-	The trained model was used to evaluate the input data and predict the ages of the patients.
-Each training run produced slightly different models, the models trained with the optimal configuration have an average RMS of 7.1 years, the best performing model has a RMS of 6.30 years and a MSE of 39.66 over all the input data.
-
-Repeated training could improve the average performance of the set of trained models but it is unlikely that these model could predict on the input data with a lower than 6 years RMS without gross overfitting. 
-
-Only the best performing model will be considered for the next analysis.
-
-
-
-\end{frame}
-
-% Eleventh slide
-\subsection{Comparing the results}
-\begin{frame}{Comparing the results}
-
-The performance of the model on all the different groups is compared in the figure below: the prediction error for the data of the ``Caltech'', ``MaxMun'' and ``SBL'' groups is vastly above the average. 
-
-\begin{figure}
-	\includegraphics[width=0.65\textwidth]{result_1.png}
-	\captionof{figure}{Plot comparing the prediction error for the various data groups. The error on the whole data set is displayed as a dotted line.}
-	\label{plotRMSComparison2}
-\end{figure}
+	Esegue un ciclo attraverso diversi valori ``ragionevoli'' degli iperparametri e realizza un addestramento più breve; la storia dell'addestramento può essere quindi valutata dall'utente per scegliere gli iperparametri o per affinare l'intervallo di parametri dell'Optimizator.
+\pause
+	Il modello con le migliori prestazioni per questo progetto è stato un modello con 2 strati nascosti e 6 nodi per strato. Questa configurazione ha avuto il tempo di addestramento più veloce e, in generale, le migliori prestazioni medie di previsione.
 
 \end{frame}
 
 
-\begin{frame}{Comparing the results 2}
+% Twelveth slide ----------------------------------------------------------------------------------------------------------------------------------------------------
 
-Repeating the training on a reduced data set by removing the three outlier data groups doesn't significantly improve the performance of the model: the trained model performs similarly on the remaining data groups but significantly worse for the three outliers. 
+\section{Risultati e conclusioni}
+\begin{frame}{Previsioni}
+
+	Il modello addestrato è stato utilizzato per valutare i dati di input e prevedere le età dei pazienti.
+	Ciascun addestramento ha prodotto modelli leggermente diversi; i modelli addestrati con la configurazione ottimale hanno costantemente un RMS delle previsioni nell'intervallo [6.3,6.9] anni, il modello con le migliori prestazioni ha un RMS di 6.30 anni e un MSE di 39.66 su tutti i dati di input.
+\pause
+	Un addestramento ripetuto potrebbe migliorare le prestazioni medie del set di modelli addestrati, ma è improbabile che questi modelli possano prevedere i dati di input con un RMS inferiore ai 6 anni senza un eccessivo overfitting.
+
+\end{frame}
+
+
+% Thirteenth slide ----------------------------------------------------------------------------------------------------------------------------------------------------
+
+\subsection{Confronto dei risultati}
+\begin{frame}{Confronto dei risultati}
+
+	Le prestazioni del modello sui diversi gruppi sono confrontate nella figura sottostante: 
+l'errore di previsione per i dati dei gruppi ``Caltech'', ``MaxMun'' e ``SBL'' è nettamente superiore alla media.
+
+	\begin{figure}
+		\includegraphics[width=0.65\textwidth]{result_1.png}
+		\captionof{figure}{Grafico che confronta l'errore di previsione per i vari gruppi di dati. L'errore sull'intero set di dati è mostrato come una linea tratteggiata.}
+		\label{plotRMSComparison2}
+	\end{figure}
+
+\end{frame}
+
+
+%Fourteenth ----------------------------------------------------------------------------------------------------------------------------------------------------
+
+\begin{frame}{Confronto dei risultati 2}
+
+Ripetere l'addestramento su un set di dati ridotto, rimuovendo i tre gruppi di dati outlier, non migliora significativamente le prestazioni del modello: il modello addestrato si comporta in modo simile sui gruppi di dati rimanenti ma in modo significativamente peggiore per i tre outlier.
 
 \begin{table}\centering
 \begin{minipage}{0.45\textwidth}
@@ -247,25 +285,38 @@ Repeating the training on a reduced data set by removing the three outlier data 
 \end{frame}
 
 
-% Backup slide 1
+%END ----------------------------------------------------------------------------------------------------------------------------------------------------
 
-\begin{frame}{Git and the repository}
+{
+    \customSectionHeader
+\begin{frame}
+\centering
+\Huge
+\textbf{Grazie per l'attenzione!}
+\end{frame}
+}
 
-The project uses a public github repository. It has a main branch and three active branches: develop, feature/docs and feature/presentation.
+% Backup slide 1 ----------------------------------------------------------------------------------------------------------------------------------------------------
 
+\begin{frame}{Git e il repository}
+
+Il progetto utilizza un repository pubblico su GitHub. 
+
+Ha un ramo principale e tre rami attivi: develop, feature/docs e feature/presentation.
 
 \end{frame}
 
-% Backup slide 2
 
-\begin{frame}{Documentation}
+% Backup slide 2 ----------------------------------------------------------------------------------------------------------------------------------------------------
 
-The documentation for the project was generated via Sphinx, using its \emph{autodoc} functionality to extract the docstrings from the source code.
+\begin{frame}{Documentazione}
 
-The public GitHub repository allows to distribute the projects documentation through ReadTheDocs and GitHub's own Pages.
+La documentazione del progetto è stata generata tramite Sphinx, utilizzando la sua funzionalità \emph{autodoc} per estrarre le docstring dal codice sorgente.
 
+Il repository pubblico su GitHub consente di distribuire la documentazione del progetto attraverso ReadTheDocs e le Pages di GitHub.
 
 \end{frame}
+
 
 
 

@@ -45,6 +45,7 @@ def testRegressionModel(test_compile=False,
     if test_plot_history:
         regression_model.Plot_History()
         print("Training history plot saved.")
+        print(regression_model._save_path)
 
 if __name__ == '__main__':
     # Test the RegressionModel class

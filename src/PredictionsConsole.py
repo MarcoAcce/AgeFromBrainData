@@ -24,7 +24,7 @@ def PredictionsConsole(skip:boolean = False):
 
 
     if skip:
-        model_path = "saves\\2024-09-01 23-22-10.keras"
+        model_path = "saves\\2024-09-07 00-23-14.keras"
         nr_path = "saves\\normalisation\\2024-08-22 00-22-46.txt"
         pr_path = "input\\FS_features_ABIDE_males_someGlobals.xlsx" 
         return model_path, nr_path, pr_path

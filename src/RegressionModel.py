@@ -167,8 +167,8 @@ class RegressionModel(IRegression):
         Will create a save directory the first time its called.
         """
         save_path = os.path.join(os.getcwd(), r'saves')
-        os.makedirs(save_path, exist_ok= True)
-        save_path += str(datetime.now().strftime("%Y-%m-%d %H-%M-%S"))
+        os.makedirs(save_path, exist_ok = True)
+        save_path += "\\" + str(datetime.now().strftime("%Y-%m-%d %H-%M-%S"))
         return save_path    
 
     

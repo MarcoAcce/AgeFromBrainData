@@ -65,20 +65,6 @@ La configurazione migliore per il modello è stata un modello di deep learning c
 
 \end{frame}
 
-% Second Slide----------------------------------------------------------------------------------------------------------------------------------------------------
-
-\subsection{Librerie}
-\begin{frame}{Librerie}
-    \begin{itemize}
-		\item Ho utilizzato la libreria \emph{keras} per il modello di regressione per scrivere un'implementazione specifica per il problema.
-\pause
-		\item Per leggere e manipolare i dati cerebrali, forniti in file .xlsx, ho usato \emph{pandas}.
-\pause
-        \item Per tracciare i risultati e le visualizzazioni ho utilizzato \emph{matplotlib}.
-\pause
-        \item Ho usato i moduli \emph{os} e \emph{sys} dalla libreria standard di Python per ottenere e manipolare percorsi e directory.
-    \end{itemize}
-\end{frame}
 
 % Third Slide----------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -89,20 +75,13 @@ Il codice sorgente di questo programma contiene diverse classi e alcuni script, 
     \begin{itemize}
 		\item La classe ExcelData è responsabile della lettura del file excel e fornisce input adeguati per il modello.
 \pause
-		\item La classe RegressionModel contiene il modello stesso. Implementa metodi per compilare, addestrare, salvare e caricare modelli di regressione.
+		\item La classe RegressionModel contiene il modello stesso.
 \pause
-        \item I due script ``Console'' forniscono un'interfaccia utente di base per semplificare l'uso del progetto, permettendo all'utente di addestrare un modello e usarlo per fare previsioni senza modificare o scrivere codice.
-    \end{itemize}
-\end{frame}
+        \item I due script ``Console'' forniscono un'interfaccia utente di base.
 
-
-% Fourth Slide----------------------------------------------------------------------------------------------------------------------------------------------------
-
-\begin{frame}{Cosa c'è nel codice 2}
-    \begin{itemize}
         \item Lo script Optimizator permette di scegliere rapidamente i valori per gli iperparametri del modello.
 \pause
-		\item Lo script Analysis prende un file .xlsx contenente le etichette reali e i valori predetti per calcolare l'RMS e l'MSE delle previsioni. Consente inoltre di confrontare i dati dei diversi gruppi nel set di dati originale.
+		\item Lo script Analysis per l'analisi.
     \end{itemize}
 \end{frame}
 
@@ -165,22 +144,6 @@ I dati "grezzi" contengono diverse celle vuote e le varie caratteristiche hanno 
 \end{frame}
 
 
-% Eighth Slide ----------------------------------------------------------------------------------------------------------------------------------------------------
-
-\begin{frame}{L'effetto della normalizzazione 2}
-\centering
-\begin{minipage}{0.48\textwidth}
-	\includegraphics[width=\textwidth]{Figure_4.png}
-	\captionof{figure}{Grafico delle ultime epoche di addestramento utilizzando dati normalizzati.}
-	\label{historyNormalised2}
-\end{minipage}
-\begin{minipage}{0.48\textwidth}
-	\includegraphics[width=\textwidth]{History_subplot_3.png}
-	\captionof{figure}{Grafico delle ultime epoche di addestramento utilizzando dati grezzi.}
-	\label{historyNonNormalised2}
-\end{minipage}
-
-\end{frame}
 
 
 % Ninth Slide ----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -222,33 +185,6 @@ Per ottimizzare la fase di addestramento vengono utilizzati diversi callback:
 				Questa è una versione modificata di Callback della libreria \emph{keras}. Stampa le funzioni di perdita ogni n epoche. Il parametro n è impostato dall'utente attraverso un parametro ``verbose\_training'' del metodo Start\_Training.
     \end{itemize}
 \end{frame}
-
-
-% Eleventh slide ----------------------------------------------------------------------------------------------------------------------------------------------------
-
-\subsection{Ottimizzazione degli iperparametri}
-\begin{frame}{Ottimizzazione degli iperparametri}
-	Il script Optimizator.py è stato utilizzato per scegliere gli iperparametri.
-
-	Esegue un ciclo attraverso diversi valori ``ragionevoli'' degli iperparametri e realizza un addestramento più breve; la storia dell'addestramento può essere quindi valutata dall'utente per scegliere gli iperparametri o per affinare l'intervallo di parametri dell'Optimizator.
-\pause
-	Il modello con le migliori prestazioni per questo progetto è stato un modello con 2 strati nascosti e 6 nodi per strato. Questa configurazione ha avuto il tempo di addestramento più veloce e, in generale, le migliori prestazioni medie di previsione.
-
-\end{frame}
-
-
-% Twelveth slide ----------------------------------------------------------------------------------------------------------------------------------------------------
-
-\section{Risultati e conclusioni}
-\begin{frame}{Previsioni}
-
-	Il modello addestrato è stato utilizzato per valutare i dati di input e prevedere le età dei pazienti.
-	Ciascun addestramento ha prodotto modelli leggermente diversi; i modelli addestrati con la configurazione ottimale hanno costantemente un RMS delle previsioni nell'intervallo [6.3,6.9] anni, il modello con le migliori prestazioni ha un RMS di 6.30 anni e un MSE di 39.66 su tutti i dati di input.
-\pause
-	Un addestramento ripetuto potrebbe migliorare le prestazioni medie del set di modelli addestrati, ma è improbabile che questi modelli possano prevedere i dati di input con un RMS inferiore ai 6 anni senza un eccessivo overfitting.
-
-\end{frame}
-
 
 % Thirteenth slide ----------------------------------------------------------------------------------------------------------------------------------------------------
 

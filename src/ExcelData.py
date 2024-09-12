@@ -57,8 +57,7 @@ class ExcelData(IData):
             raise ValueError("File {} doesn't exist!".format(self._file_path))
 
         try:
-            self._data_frame = pd.read_excel(self._file_path)\
-                [self._used_columns]
+            self._data_frame = pd.read_excel(self._file_path)
         
         except Exception as e:
             print(f"Error loading data from {self._file_path}: {e}")
